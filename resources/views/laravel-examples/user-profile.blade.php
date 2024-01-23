@@ -4,36 +4,41 @@
     <div>
         <div class="container-fluid py-4">
             <div class="card">
-                <div class="card-header pb-0 px-3">
-                    <div class="card card-body blur shadow-blur mx-4 mt-n6">
-                        <div class="row gx-4">
-                            <div class="col-auto">
-                                <div class="avatar avatar-xl position-relative">
-                                    <img src="../assets/img/bruce-mars.jpg" alt="..."
-                                        class="w-100 border-radius-lg shadow-sm">
-                                    <a href="javascript:;"
-                                        class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2">
+                <form action="{{ route('userprofil.store') }}" method="POST" role="form text-left"
+                    enctype="multipart/form-data">
+                    <div class="card-header pb-0 px-3">
+                        <div class="card card-body blur shadow-blur mx-4 mt-n6">
+                            <div class="row gx-4">
+                                <div class="col-auto">
+                                    <div class="avatar avatar-xl position-relative">
+                                        <img src="{{ asset('storage/' . auth()->user()->profile_image) }}" alt=""
+                                            class="w-100 border-radius-lg shadow-sm">
+
+                                        <input type="file" name="profile_image" accept="image/*"
+                                            class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2" />
+
                                         <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
                                             title="Edit Image"></i>
-                                    </a>
+
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-auto my-auto">
-                                <div class="h-100">
-                                    <h5 class="mb-1">
-                                        {{ auth()->user()->name }}
-                                    </h5>
-                                    <p class="mb-0 font-weight-bold text-sm">
-                                        {{ auth()->user()->about_me }}
-                                    </p>
+                                <div class="col-auto my-auto">
+                                    <div class="h-100">
+                                        <h5 class="mb-1">
+                                            {{ auth()->user()->name }}
+                                        </h5>
+                                        <p class="mb-0 font-weight-bold text-sm">
+                                            {{ auth()->user()->about_me }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <h6 class="mt-5">Información de Perfil</h6>
                     </div>
-                    <h6 class="mt-5">Información de Perfil</h6>
-                </div>
-                <div class="card-body pt-4 p-3">
-                    <form action="{{ route('userprofil.store') }}" method="POST" role="form text-left">
+                    <div class="card-body pt-4 p-3">
+
                         @csrf
                         @if ($errors->any())
                             <div class="mt-3  alert alert-primary alert-dismissible fade show" role="alert">
@@ -113,9 +118,10 @@
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">Guardar cambios</button>
                         </div>
-                    </form>
 
-                </div>
+
+                    </div>
+                </form>
             </div>
         </div>
     </div>

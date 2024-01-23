@@ -26,6 +26,7 @@ class InfoUserController extends Controller
             'phone'     => ['max:50'],
             'location' => ['max:70'],
             'about_me'    => ['max:150'],
+            'profile_image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
         ]);
         if ($request->get('email') != Auth::user()->email) {
             if (env('IS_DEMO') && Auth::user()->id == 1) {
@@ -37,17 +38,28 @@ class InfoUserController extends Controller
             ]);
         }
 
+        if ($request->hasFile('profile_image')) {
+            // Almacena la imagen y obtén la ruta
+            $imagePath = $request->file('profile_image')->store('profile_images', 'public');
 
-        User::where('id', Auth::user()->id)
-            ->update([
-                'name'    => $attributes['name'],
-                'email' => $attribute['email'],
-                'phone'     => $attributes['phone'],
-                'location' => $attributes['location'],
-                'about_me'    => $attributes["about_me"],
+            // Actualiza el campo de la imagen en la base de datos
+            User::where('id', Auth::user()->id)->update([
+                'profile_image' => $imagePath,
             ]);
 
+            User::where('id', Auth::user()->id)
+                ->update([
+                    'name'    => $attributes['name'],
+                    'email' => $attribute['email'],
+                    'phone'     => $attributes['phone'],
+                    'location' => $attributes['location'],
+                    'about_me'    => $attributes["about_me"],
+                ]);
 
-        return redirect('/user-profile')->with('success', 'Profile updated successfully');
+
+            return redirect('/user-profile')->with('success', 'Profile updated successfully');
+        } else {
+            echo "Error";
+        }
     }
 }
