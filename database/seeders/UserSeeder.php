@@ -25,7 +25,6 @@ class UserSeeder extends Seeder
             'about_me' => 'Ingeniero de sistemas, Docente programa de ingenieria de sistemas',
             'created_at' => now(),
             'updated_at' => now()
-
         ]);
     }
 }

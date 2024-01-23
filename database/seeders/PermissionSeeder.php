@@ -17,7 +17,7 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $superAdmin = User::find(1);
+        $userSuperAdmin = User::find(1);
         $role = Role::create([
             'name' => 'SuperAdmin'
         ]);
@@ -25,6 +25,7 @@ class PermissionSeeder extends Seeder
             'name' => 'users',
             'description' => 'Gestionar Usuarios y Roles de la aplicación'
         ]);
-        $superAdmin->assignRole($role);
+        $role->givePermissionTo($permisionUsers);
+        $userSuperAdmin->assignRole($role);
     }
 }

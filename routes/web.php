@@ -68,15 +68,18 @@ Route::group(['middleware' => 'auth'], function () {
     })->name('sign-up');
 
     //USUARIOS
-    Route::get('users/create', [RegisterController::class, 'create'])->name('user.create');
-    Route::post('users/create', [RegisterController::class, 'store'])->name('user.store');
-    Route::get('users', function () {
-        return view('laravel-examples/user-management');
-    })->name('user.index');
-    Route::get('users/create', [RegisterController::class, 'create'])->name('user.create');
-    Route::get('users/{user}/edit', [RegisterController::class, 'edit'])->name('user.edit');
-    Route::post('users/{user}/edit', [RegisterController::class, 'update'])->name('user.update');
-    Route::delete('users/{user}', [RegisterController::class, 'destroy'])->name('user.destroy');
+    Route::group(['middleware' => ['can:users']], function () {
+        Route::get('users/create', [RegisterController::class, 'create'])->name('user.create');
+        Route::post('users/create', [RegisterController::class, 'store'])->name('user.store');
+        Route::get('users', function () {
+            return view('laravel-examples/user-management');
+        })->name('user.index');
+        Route::get('users/create', [RegisterController::class, 'create'])->name('user.create');
+        Route::get('users/{user}/edit', [RegisterController::class, 'edit'])->name('user.edit');
+        Route::post('users/{user}/edit', [RegisterController::class, 'update'])->name('user.update');
+        Route::delete('users/{user}', [RegisterController::class, 'destroy'])->name('user.destroy');
+    });
+
 
     //ROLES
     Route::resource('roles', RoleController::class)->names('user.roles');
