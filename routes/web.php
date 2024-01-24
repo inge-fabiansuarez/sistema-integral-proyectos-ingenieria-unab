@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Users\InfoUserController;
 use App\Http\Controllers\RegisterController;
@@ -78,6 +79,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('users/{user}/edit', [RegisterController::class, 'edit'])->name('user.edit');
         Route::post('users/{user}/edit', [RegisterController::class, 'update'])->name('user.update');
         Route::delete('users/{user}', [RegisterController::class, 'destroy'])->name('user.destroy');
+    });
+
+    Route::group(['middleware' => ['can:event']], function () {
+        Route::get('event/create', [EventController::class, 'create'])->name('event.create');
+
     });
 
 

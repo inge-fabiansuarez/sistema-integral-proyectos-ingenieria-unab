@@ -28,7 +28,7 @@ return new class extends Migration
         });
 
         // events_configuration_project_field migration
-        Schema::create('events_configuration_project_field', function (Blueprint $table) {
+        Schema::create('events_configuration_project_fields', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
             $table->integer('type_field')->comment('para definir si es un ARCHIVO O ES TEXTO PLANO');
@@ -114,7 +114,7 @@ return new class extends Migration
         Schema::dropIfExists('project_authors');
         Schema::dropIfExists('project_field');
         Schema::dropIfExists('projects');
-        Schema::dropIfExists('events_configuration_project_field');
+        Schema::dropIfExists('events_configuration_project_fields');
         Schema::dropIfExists('events');
     }
 };

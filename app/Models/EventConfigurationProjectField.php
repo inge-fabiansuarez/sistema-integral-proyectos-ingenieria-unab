@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class EventConfigurationProjectField extends Model
 {
     use HasFactory;
+    protected $table = 'events_configuration_project_fields';
     protected $fillable = [
         'name', 'type_field', 'events_id',
     ];

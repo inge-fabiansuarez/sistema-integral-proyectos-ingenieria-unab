@@ -25,7 +25,11 @@ class PermissionSeeder extends Seeder
             'name' => 'users',
             'description' => 'Gestionar Usuarios y Roles de la aplicación'
         ]);
-        $role->givePermissionTo($permisionUsers);
+        $permisionEventNormal = Permission::create([
+            'name' => 'event',
+            'description' => 'Permiso para crear y eliminar eventos propios creados por el usuario.'
+        ]);
+        $role->givePermissionTo([$permisionUsers, $permisionEventNormal]);
         $userSuperAdmin->assignRole($role);
     }
 }
