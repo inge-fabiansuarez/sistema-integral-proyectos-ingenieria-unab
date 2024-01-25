@@ -9,31 +9,27 @@ class Project extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'title', 'description', 'events_id',
+        'title', 'description',
     ];
 
-    public function event()
-    {
-        return $this->belongsTo(Event::class, 'events_id');
-    }
-
-    public function fields()
-    {
-        return $this->hasMany(ProjectField::class, 'projects_id');
-    }
-
-    public function authors()
+    public function projectAuthors()
     {
         return $this->hasMany(ProjectAuthor::class, 'projects_id');
     }
 
-    public function evaluations()
+    public function projectsEvaluator()
     {
-        return $this->hasMany(ProjectEvaluation::class, 'projects_id');
+        return $this->hasMany(ProjectEvaluator::class, 'projects_id');
     }
 
-    public function evaluators()
+    public function events()
     {
-        return $this->belongsToMany(User::class, 'projects_evaluator', 'projects_id', 'users_id')->withTimestamps();
+        return $this->belongsToMany(Event::class, 'events_has_projects', 'projects_id', 'events_id');
+    }
+
+    public function projectFields()
+    {
+        return $this->belongsToMany(ProjectField::class, 'projects_has_field', 'projects_id', 'project_field_id')
+            ->withPivot('value');
     }
 }

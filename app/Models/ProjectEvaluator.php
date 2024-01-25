@@ -5,21 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectEvaluation extends Model
+class ProjectEvaluator extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'score', 'projects_id', 'evaluation_criteria_id', 'users_id',
+        'projects_id', 'users_id',
     ];
 
     public function project()
     {
         return $this->belongsTo(Project::class, 'projects_id');
-    }
-
-    public function criteria()
-    {
-        return $this->belongsTo(EvaluationCriteria::class, 'evaluation_criteria_id');
     }
 
     public function user()

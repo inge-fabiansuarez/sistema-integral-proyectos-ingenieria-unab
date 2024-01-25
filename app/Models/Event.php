@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'name', 'opening_date', 'closing_date', 'created_by', 'description', 'img_cover', 'password', 'slug',
     ];
@@ -18,18 +16,13 @@ class Event extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function configurationProjectField()
-    {
-        return $this->hasMany(EventConfigurationProjectField::class, 'events_id');
-    }
-
     public function projects()
     {
-        return $this->hasMany(Project::class, 'events_id');
+        return $this->belongsToMany(Project::class, 'events_has_projects', 'events_id', 'projects_id');
     }
 
-    public function evaluationCriteria()
+    public function projectFields()
     {
-        return $this->hasMany(EvaluationCriteria::class, 'events_id');
+        return $this->belongsToMany(ProjectField::class, 'events_has_project_field', 'events_id', 'project_field_id');
     }
 }

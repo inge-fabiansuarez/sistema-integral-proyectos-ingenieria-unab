@@ -9,11 +9,17 @@ class ProjectField extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name', 'value', 'type_field', 'projects_id',
+        'name', 'type_field',
     ];
 
-    public function project()
+    public function projects()
     {
-        return $this->belongsTo(Project::class, 'projects_id');
+        return $this->belongsToMany(Project::class, 'projects_has_field', 'project_field_id', 'projects_id')
+            ->withPivot('value');
+    }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'events_has_project_field', 'project_field_id', 'events_id');
     }
 }
