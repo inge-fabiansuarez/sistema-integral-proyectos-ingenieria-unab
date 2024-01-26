@@ -38,10 +38,11 @@ return new class extends Migration
         });
 
         // Project Field Table
-        Schema::create('project_field', function (Blueprint $table) {
+        Schema::create('project_fields', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->integer('type_field');
+            $table->integer('order')->nullable();
             $table->timestamps();
         });
 
@@ -87,7 +88,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('projects_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('project_field_id')->references('id')->on('project_field')->onDelete('cascade');
+            $table->foreign('project_field_id')->references('id')->on('project_fields')->onDelete('cascade');
         });
 
         // Events Has Project Field Table
@@ -98,7 +99,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('events_id')->references('id')->on('events')->onDelete('cascade');
-            $table->foreign('project_field_id')->references('id')->on('project_field')->onDelete('cascade');
+            $table->foreign('project_field_id')->references('id')->on('project_fields')->onDelete('cascade');
         });
     }
 
@@ -115,7 +116,7 @@ return new class extends Migration
         Schema::dropIfExists('events_has_projects');
         Schema::dropIfExists('projects_evaluator');
         Schema::dropIfExists('project_authors');
-        Schema::dropIfExists('project_field');
+        Schema::dropIfExists('project_fields');
         Schema::dropIfExists('projects');
         Schema::dropIfExists('events');
     }

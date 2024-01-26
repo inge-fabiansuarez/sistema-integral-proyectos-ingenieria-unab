@@ -3,11 +3,13 @@
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProjectFieldController;
 use App\Http\Controllers\Users\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\Users\RoleController;
+use App\Models\ProjectField;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -93,8 +95,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/user-profile', [InfoUserController::class, 'store'])->name('userprofil.store');
 
     //events
-    Route::resource('events', EventController::class);
+    Route::resource('events', EventController::class)->middleware('can:event');
 
+    //campos del projecto
+    Route::resource('project-fields', ProjectFieldController::class)->names('project-fields')->middleware('can:projectFields');
     //DE PUEBA
     Route::get('/up-project', [RegisterController::class, 'create'])->name('up-project');
 });

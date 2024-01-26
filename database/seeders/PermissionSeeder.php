@@ -29,7 +29,15 @@ class PermissionSeeder extends Seeder
             'name' => 'event',
             'description' => 'Permiso para crear y eliminar eventos propios creados por el usuario.'
         ]);
-        $role->givePermissionTo([$permisionUsers, $permisionEventNormal]);
+        $permissionProjectFields = Permission::create([
+            'name' => 'projectFields',
+            'description' => 'CRUD campo de proyectos'
+        ]);
+        $role->givePermissionTo([
+            $permisionUsers,
+            $permisionEventNormal,
+            $permissionProjectFields
+        ]);
         $userSuperAdmin->assignRole($role);
     }
 }
