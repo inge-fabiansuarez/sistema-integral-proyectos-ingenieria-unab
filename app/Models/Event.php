@@ -32,7 +32,7 @@ class Event extends Model
         'opening_date' => 'required|date',
         'closing_date' => 'required|date',
         'description' => 'required|string',
-        'img_cover' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'img_cover' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'password' => 'required|min:4',
     ];
 

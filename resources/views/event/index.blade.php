@@ -50,7 +50,7 @@
                                             <td>{{ $event->name }}</td>
                                             <td>{{ $event->opening_date }}</td>
                                             <td>{{ $event->closing_date }}</td>
-                                            <td>{{ $event->created_by }}</td>
+                                            <td>{{ $event->createdBy->name }}</td>
                                             <td>{{ $event->description }}</td>
 
                                             <td>

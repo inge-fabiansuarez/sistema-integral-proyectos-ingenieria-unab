@@ -73,7 +73,6 @@ return new class extends Migration
             $table->bigInteger('events_id')->unsigned();
             $table->bigInteger('projects_id')->unsigned();
             $table->primary(['events_id', 'projects_id']);
-            $table->timestamps();
 
             $table->foreign('events_id')->references('id')->on('events')->onDelete('cascade');
             $table->foreign('projects_id')->references('id')->on('projects')->onDelete('cascade');
