@@ -33,7 +33,7 @@
 
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('assets/css/soft-ui-dashboard.css?v=1.0.3') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet" />
     @livewireStyles
 </head>
 
@@ -46,12 +46,14 @@
         @yield('guest')
     @endguest
 
-    @if (session()->has('success'))
+    @yield('auth-or-guest')
+
+    {{--  @if (session()->has('success'))
         <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 4000)" x-show="show"
             class="position-fixed bg-success rounded right-3 text-sm py-2 px-4">
             <p class="m-0">{{ session('success') }}</p>
         </div>
-    @endif
+    @endif --}}
 
     @livewireScripts
     <!--   Core JS Files   -->
@@ -78,6 +80,20 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('assets/js/soft-ui-dashboard.min.js?v=1.0.3') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (session()->has('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: '{{ session('success') }}',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @endif
 
 </body>
 

@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('event/{slug}', [EventController::class, 'showBySlug'])->name('events.showBySlug');
 
 Route::group(['middleware' => 'auth'], function () {
 
@@ -83,7 +84,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => ['can:event']], function () {
         Route::get('event/create', [EventController::class, 'create'])->name('event.create');
-
     });
 
 
@@ -91,7 +91,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('roles', RoleController::class)->names('user.roles');
     Route::get('/user-profile', [InfoUserController::class, 'create'])->name('userprofil.index');
     Route::post('/user-profile', [InfoUserController::class, 'store'])->name('userprofil.store');
+
+    //events
+    Route::resource('events', EventController::class);
+
+    //DE PUEBA
+    Route::get('/up-project', [RegisterController::class, 'create'])->name('up-project');
 });
+
 
 
 

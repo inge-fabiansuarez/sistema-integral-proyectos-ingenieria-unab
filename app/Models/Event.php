@@ -2,14 +2,49 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Event
+ *
+ * @property $id
+ * @property $name
+ * @property $opening_date
+ * @property $closing_date
+ * @property $created_by
+ * @property $description
+ * @property $img_cover
+ * @property $password
+ * @property $slug
+ * @property $created_at
+ * @property $updated_at
+ *
+ * @property EventsHasProject $eventsHasProject
+ * @property EventsHasProjectField $eventsHasProjectField
+ * @property User $user
+ * @package App
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ */
 class Event extends Model
 {
-    protected $fillable = [
-        'name', 'opening_date', 'closing_date', 'created_by', 'description', 'img_cover', 'password', 'slug',
+    static $rules = [
+        'name' => 'required|string|max:255',
+        'opening_date' => 'required|date',
+        'closing_date' => 'required|date',
+        'description' => 'required|string',
+        'img_cover' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'password' => 'required|min:4',
     ];
+
+    protected $perPage = 20;
+
+    /**
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name', 'opening_date', 'closing_date', 'created_by', 'description', 'img_cover', 'slug', 'password'];
+
 
     public function createdBy()
     {
