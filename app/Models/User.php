@@ -46,10 +46,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-
-    public function audiometries()
+    public function registeredEvents()
     {
-        return $this->hasMany(Audiometry::class, 'user_id');
+        return $this->belongsToMany(Event::class, 'events_has_registered_users', 'users_id', 'events_id');
     }
 }

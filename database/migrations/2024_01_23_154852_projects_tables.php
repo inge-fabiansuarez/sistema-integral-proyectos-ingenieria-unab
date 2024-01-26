@@ -57,16 +57,7 @@ return new class extends Migration
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
         });
 
-        // Projects Evaluator Table
-        Schema::create('projects_evaluator', function (Blueprint $table) {
-            $table->bigInteger('projects_id')->unsigned();
-            $table->bigInteger('users_id')->unsigned();
-            $table->primary(['projects_id', 'users_id']);
-            $table->timestamps();
 
-            $table->foreign('projects_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
-        });
 
         // Events Has Projects Table
         Schema::create('events_has_projects', function (Blueprint $table) {
@@ -100,6 +91,14 @@ return new class extends Migration
             $table->foreign('events_id')->references('id')->on('events')->onDelete('cascade');
             $table->foreign('project_field_id')->references('id')->on('project_fields')->onDelete('cascade');
         });
+
+        Schema::create('events_has_registered_users', function (Blueprint $table) {
+            $table->unsignedBigInteger('events_id');
+            $table->unsignedBigInteger('users_id');
+            $table->primary(['events_id', 'users_id']);
+            $table->foreign('events_id')->references('id')->on('events')->onDelete('no action')->onUpdate('no action');
+            $table->foreign('users_id')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
+        });
     }
 
     /**
@@ -110,10 +109,10 @@ return new class extends Migration
     public function down()
     {
         // Drop tables in reverse order to avoid foreign key constraint issues
+        Schema::dropIfExists('events_has_registered_users');
         Schema::dropIfExists('events_has_project_field');
         Schema::dropIfExists('projects_has_field');
         Schema::dropIfExists('events_has_projects');
-        Schema::dropIfExists('projects_evaluator');
         Schema::dropIfExists('project_authors');
         Schema::dropIfExists('project_fields');
         Schema::dropIfExists('projects');

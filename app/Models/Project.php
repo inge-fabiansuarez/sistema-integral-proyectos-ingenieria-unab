@@ -2,24 +2,45 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Project
+ *
+ * @property $id
+ * @property $title
+ * @property $description
+ * @property $created_at
+ * @property $updated_at
+ *
+ * @property EventsHasProject[] $eventsHasProjects
+ * @property ProjectsEvaluator $projectsEvaluator
+ * @property ProjectsHasField $projectsHasField
+ * @property ProjectAuthor $projectAuthor
+ * @package App
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ */
 class Project extends Model
 {
-    use HasFactory;
-    protected $fillable = [
-        'title', 'description',
+
+    static $rules = [
+        'title' => 'required',
+        'description' => 'required',
     ];
+
+    protected $perPage = 20;
+
+    /**
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['title', 'description'];
+
 
     public function projectAuthors()
     {
         return $this->hasMany(ProjectAuthor::class, 'projects_id');
-    }
-
-    public function projectsEvaluator()
-    {
-        return $this->hasMany(ProjectEvaluator::class, 'projects_id');
     }
 
     public function events()

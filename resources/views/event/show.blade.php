@@ -36,7 +36,8 @@
                             </div>
 
                             <div class="card-body">
-                                <form role="form text-left" method="GET" action="{{ route('up-project') }}">
+                                <form role="form text-left" method="POST" action="{{ route('up-project', $event) }}">
+                                    @csrf
                                     <div class="form-group">
                                         <strong>Nombre:</strong>
                                         {{ $event->name }}
@@ -53,6 +54,14 @@
                                         <strong>Descripción:</strong>
                                         {{ $event->description }}
                                     </div>
+                                    {{-- <div class="form-group">
+                                        <label for="password">Contraseña:</label>
+                                        <input type="password" placeholder="Contraseña" name="password" id="password"
+                                            class="form-control" required>
+                                        @error('password')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div> --}}
                                     <div class="text-center">
                                         <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Subir el
                                             proyecto</button>

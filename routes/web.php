@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectFieldController;
 use App\Http\Controllers\Users\InfoUserController;
 use App\Http\Controllers\RegisterController;
@@ -99,8 +100,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     //campos del projecto
     Route::resource('project-fields', ProjectFieldController::class)->names('project-fields')->middleware('can:projectFields');
+
+    //Projects
+    Route::resource('projects', ProjectController::class)->names('projects')->middleware('can:projects');
+
     //DE PUEBA
-    Route::get('/up-project', [RegisterController::class, 'create'])->name('up-project');
+    Route::post('projects-up/{event}', [ProjectController::class, 'createUp'])->name('up-project');
+    Route::get('projects-up/{event}', [ProjectController::class, 'createUpProject'])->name('project-up-create');
 });
 
 

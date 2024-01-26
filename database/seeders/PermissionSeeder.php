@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -17,9 +19,25 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('users')->insert([
+            'id' => 2,
+            'name' => 'Fabian Enrique Suarez Carvajal',
+            'email' => 'fabian280999@gmail.com',
+            'password' => Hash::make('secret'),
+            'phone' => '3229243184',
+            'location' => 'Calle 10 # 21-67 apt 602',
+            'about_me' => 'Ingeniero de sistemas, Docente programa de ingenieria de sistemas',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
         $userSuperAdmin = User::find(1);
-        $role = Role::create([
+        $userEstudiante = User::find(2);
+
+        $roleSuperAdmin = Role::create([
             'name' => 'SuperAdmin'
+        ]);
+        $roleEstudiante = Role::create([
+            'name' => 'Estudiante'
         ]);
         $permisionUsers = Permission::create([
             'name' => 'users',
@@ -33,11 +51,17 @@ class PermissionSeeder extends Seeder
             'name' => 'projectFields',
             'description' => 'CRUD campo de proyectos'
         ]);
-        $role->givePermissionTo([
+        $permissionProjects = Permission::create([
+            'name' => 'projects',
+            'description' => 'CRUD Proyectos'
+        ]);
+        $roleSuperAdmin->givePermissionTo([
             $permisionUsers,
             $permisionEventNormal,
-            $permissionProjectFields
+            $permissionProjectFields,
+            $permissionProjects
         ]);
-        $userSuperAdmin->assignRole($role);
+        $userEstudiante->assignRole($roleEstudiante);
+        $userSuperAdmin->assignRole($roleSuperAdmin);
     }
 }

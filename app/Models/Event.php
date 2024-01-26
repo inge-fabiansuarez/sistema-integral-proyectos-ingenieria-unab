@@ -70,4 +70,8 @@ class Event extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+    public function registeredUsers()
+    {
+        return $this->belongsToMany(User::class, 'events_has_registered_users', 'events_id', 'users_id');
+    }
 }
