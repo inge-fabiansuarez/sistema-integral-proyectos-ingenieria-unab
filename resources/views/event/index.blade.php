@@ -56,7 +56,7 @@
                                             <td>
                                                 <form action="{{ route('events.destroy', $event->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('events.show', $event->id) }}"><i
+                                                        href="{{ route('events.showBySlug', $event->slug) }}"><i
                                                             class="fa fa-fw fa-eye"></i> {{ __('Ver') }}</a>
                                                     <a class="btn btn-sm btn-success"
                                                         href="{{ route('events.edit', $event->id) }}"><i

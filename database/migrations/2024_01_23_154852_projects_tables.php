@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('img_cover');
             $table->string('password');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->timestamps();
 
             $table->foreign('created_by')->references('id')->on('users');
