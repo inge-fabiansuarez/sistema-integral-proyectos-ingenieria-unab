@@ -20,7 +20,7 @@
         <input type="hidden" name="event" value="{{ $event->id }}">
         <div class="form-group">
             {{ Form::label('cover_image', 'Imagen de Portada') }}
-            {{ Form::file('cover_image', ['class' => 'form-control' . ($errors->has('cover_image') ? ' is-invalid' : '')]) }}
+            {{ Form::file('cover_image', ['class' => 'form-control' . ($errors->has('cover_image') ? ' is-invalid' : ''), 'accept' => 'image/*']) }}
             {!! $errors->first('cover_image', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 
