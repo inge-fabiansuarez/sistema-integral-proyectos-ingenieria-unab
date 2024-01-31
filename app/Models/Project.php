@@ -26,6 +26,7 @@ class Project extends Model
     static $rules = [
         'title' => 'required',
         'description' => 'required',
+        'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif'
     ];
 
     protected $perPage = 20;
@@ -35,7 +36,7 @@ class Project extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['title', 'description', 'cover_image'];
 
 
     public function projectAuthors()

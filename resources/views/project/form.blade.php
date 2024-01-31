@@ -7,16 +7,52 @@
         </div>
 
         <div class="form-group">
-            {{ Form::label('title', 'Título') }}
+            {{ Form::label('title', 'Título Projecto') }}
             {{ Form::text('title', $project->title, ['class' => 'form-control' . ($errors->has('title') ? ' is-invalid' : ''), 'placeholder' => 'Título']) }}
             {!! $errors->first('title', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 
         <div class="form-group">
-            {{ Form::label('description', 'Descripción') }}
-            {{ Form::text('description', $project->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Descripción']) }}
+            {{ Form::label('description', 'Resumen') }}
+            {{ Form::textarea('description', $project->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Descripción', 'rows' => 3]) }}
             {!! $errors->first('description', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+        <input type="hidden" name="event" value="{{ $event->id }}">
+        <div class="form-group">
+            {{ Form::label('cover_image', 'Imagen de Portada') }}
+            {{ Form::file('cover_image', ['class' => 'form-control' . ($errors->has('cover_image') ? ' is-invalid' : '')]) }}
+            {!! $errors->first('cover_image', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+
+        @foreach ($event->projectFields as $field)
+            <div class="form-group">
+                {{ Form::label($field->name, $field->name) }}
+                @switch(App\Enums\TypeFieldProjectEnum::from($field->type_field)->getId())
+                    @case(App\Enums\TypeFieldProjectEnum::TEXT->getId())
+                        {{ Form::textarea($field->slug, '', ['class' => 'form-control' . ($errors->has($field->name) ? ' is-invalid' : ''), 'placeholder' => $field->name, 'rows' => 3]) }}
+                    @break
+
+                    @case(App\Enums\TypeFieldProjectEnum::FILE->getId())
+                        {{ Form::file($field->slug, ['class' => 'form-control' . ($errors->has($field->name) ? ' is-invalid' : '')]) }}
+                    @break
+
+                    @default
+                @endswitch
+
+                {!! $errors->first($field->slug, '<div class="invalid-feedback">:message</div>') !!}
+            </div>
+        @endforeach
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
 
     </div>
     <div class="box-footer mt20">

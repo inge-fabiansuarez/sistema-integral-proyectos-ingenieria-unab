@@ -12,7 +12,8 @@
                         <span class="card-title">{{ __('Create') }} Project</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('projects.store') }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('project-up-create.store', $event) }}" role="form"
+                            enctype="multipart/form-data">
                             @csrf
 
                             @include('project.form')

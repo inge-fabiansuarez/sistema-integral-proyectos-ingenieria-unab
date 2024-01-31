@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TypeFieldProjectEnum;
 use App\Models\Event;
 use App\Models\Project;
+use App\Models\ProjectField;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -97,9 +99,83 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(Project::$rules);
+        //dd($request);
+        $idEvent = $request->input('event');
+        $event = Event::find($idEvent);
+        //dd($event);
+        $validations = Project::$rules;
+        foreach ($event->projectFields as $field) {
+            switch ($field->type_field) {
+                case TypeFieldProjectEnum::TEXT->getId():
+                    $validations[$field->slug] = 'required|string';
+                    break;
+                case TypeFieldProjectEnum::FILE->getId():
+                    $validations[$field->slug] = 'required|file';
+                    break;
+            }
+        }
+        request()->validate($validations);
 
-        $project = Project::create($request->all());
+        $project = new Project([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+        ]);
+        // Maneja la imagen de portada
+        $coverImage = $request->file('cover_image');
+
+        // Verifica si se ha subido una imagen de portada
+        if ($coverImage) {
+            // Genera un nombre único para la imagen de portada
+            $coverImageName = uniqid() . '_' . $coverImage->getClientOriginalName();
+
+            // Almacena la imagen de portada en el sistema de archivos
+            $coverImage->storeAs('projects/cover_images', $coverImageName, 'public');
+
+            // Guarda la ruta de la imagen de portada en la base de datos
+            $project->cover_image = 'projects/cover_images/' . $coverImageName;
+        }
+
+
+        // Guarda el proyecto en la base de datos
+        $project->save();
+        //dd($project);
+
+        // Asocia el proyecto con el evento
+        $project->events()->attach($event);
+
+
+        // Guarda los campos específicos para cada tipo de proyecto
+        foreach ($event->projectFields as $field) {
+            $fieldName = $field->slug;
+            $fieldType = TypeFieldProjectEnum::from($field->type_field);
+
+
+            switch ($fieldType) {
+                case TypeFieldProjectEnum::TEXT:
+                    $value = $request->input($fieldName);
+                    break;
+                case TypeFieldProjectEnum::FILE:
+                    $file = $request->file($fieldName);
+
+                    // Verifica si se ha subido un archivo
+                    if ($file) {
+                        // Genera un nombre único para el archivo
+                        $fileName = uniqid() . '_' . $file->getClientOriginalName();
+
+                        // Almacena el archivo en el sistema de archivos
+                        $file->storeAs('projects/archivos_proyectos', $fileName, 'public');
+
+                        // Guarda la ruta del archivo en la base de datos
+                        $value = 'projects/archivos_proyectos/' . $fileName;
+                    } else {
+                        $value = null;
+                    }
+                    break;
+            }
+
+            // Guarda el campo en la tabla pivot
+            $project->projectFields()->attach($field->id, ['value' => $value]);
+        }
 
         return redirect()->route('projects.index')
             ->with('success', 'Project created successfully.');

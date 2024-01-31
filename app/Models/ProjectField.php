@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * Class ProjectField
@@ -20,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ProjectField extends Model
 {
+    use HasSlug;
     protected $table = 'project_fields';
     static $rules = [
         'name' => 'required',
@@ -48,5 +51,11 @@ class ProjectField extends Model
     public function events()
     {
         return $this->belongsToMany(Event::class, 'events_has_project_field', 'project_field_id', 'events_id');
+    }
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 }

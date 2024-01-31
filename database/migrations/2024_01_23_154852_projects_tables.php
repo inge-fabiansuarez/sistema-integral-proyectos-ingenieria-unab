@@ -34,6 +34,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('description');
+            $table->string('cover_image');
             $table->timestamps();
         });
 
@@ -43,6 +44,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('type_field');
             $table->integer('order')->nullable();
+            $table->string('slug')->unique();
             $table->timestamps();
         });
 
