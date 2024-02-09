@@ -21,12 +21,12 @@ class PermissionSeeder extends Seeder
     {
         DB::table('users')->insert([
             'id' => 2,
-            'name' => 'Fabian Enrique Suarez Carvajal',
+            'name' => 'Camilo Salazar Perez',
             'email' => 'fabian280999@gmail.com',
             'password' => Hash::make('secret'),
             'phone' => '3229243184',
             'location' => 'Calle 10 # 21-67 apt 602',
-            'about_me' => 'Ingeniero de sistemas, Docente programa de ingenieria de sistemas',
+            'about_me' => 'Ingeniero de mecanica',
             'created_at' => now(),
             'updated_at' => now()
         ]);

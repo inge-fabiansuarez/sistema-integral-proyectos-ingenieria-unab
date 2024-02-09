@@ -17,6 +17,21 @@
             {{ Form::textarea('description', $project->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Descripción', 'rows' => 3]) }}
             {!! $errors->first('description', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+
+        <div class="form-group">
+            {{ Form::label('authors', 'Autores') }}
+            <select class="form-control" multiple="multiple" name="authors[]" id="authorsSelect">
+                <!-- Aquí puedes iterar sobre los autores disponibles -->
+                @foreach ($authors as $author)
+                    <option value="{{ $author->id }}">{{ $author->name }}</option>
+                @endforeach
+            </select>
+            {!! $errors->first(
+                'authors',
+                '<div style="color: #fd5c70; font-size: .875em;margin-top: 0.25rem;width: 100%;" class="">:message</div>',
+            ) !!}
+        </div>
+
         <input type="hidden" name="event" value="{{ $event->id }}">
         <div class="form-group">
             {{ Form::label('cover_image', 'Imagen de Portada') }}
@@ -26,7 +41,7 @@
 
         @foreach ($event->projectFields as $field)
             <div class="form-group">
-                {{ Form::label($field->name, $field->name) }}
+                {{ Form::label($field->slug, $field->name) }}
                 @switch(App\Enums\TypeFieldProjectEnum::from($field->type_field)->getId())
                     @case(App\Enums\TypeFieldProjectEnum::TEXT->getId())
                         {{ Form::textarea($field->slug, '', ['class' => 'form-control' . ($errors->has($field->name) ? ' is-invalid' : ''), 'placeholder' => $field->name, 'rows' => 3]) }}
@@ -39,7 +54,10 @@
                     @default
                 @endswitch
 
-                {!! $errors->first($field->slug, '<div class="invalid-feedback">:message</div>') !!}
+                {!! $errors->first(
+                    $field->slug,
+                    '<div style="color: #fd5c70; font-size: .875em;margin-top: 0.25rem;width: 100%;" class="">:message</div>',
+                ) !!}
             </div>
         @endforeach
 
@@ -52,7 +70,6 @@
                 </ul>
             </div>
         @endif
-
 
     </div>
     <div class="box-footer mt20">

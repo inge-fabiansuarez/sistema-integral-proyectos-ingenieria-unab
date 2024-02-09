@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\TypeFieldProjectEnum;
 use App\Models\Event;
 use App\Models\Project;
+use App\Models\ProjectAuthor;
 use App\Models\ProjectField;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,10 +34,19 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request, Event $event)
     {
+        // Obtener el usuario
+        $user = User::find(auth()->user()->id);
+
+        // Verificar si el usuario tiene el evento con el ID dado
+        if (!$user->registeredEvents()->where('events.id', $event->id)->exists()) {
+            return redirect()->route('events.showBySlug', $event->slug);
+        }
+
         $project = new Project();
-        return view('project.create', compact('project'));
+        $authors =  User::orderBy('name', 'asc')->get();
+        return view('project.create', compact('project', 'event', 'authors'));
     }
 
     public function createUp(Request $request, Event $event)
@@ -75,19 +85,6 @@ class ProjectController extends Controller
         }
     }
 
-    public function createUpProject(Request $request, Event $event)
-    {
-        // Obtener el usuario
-        $user = User::find(auth()->user()->id);
-
-        // Verificar si el usuario tiene el evento con el ID dado
-        if (!$user->registeredEvents()->where('events.id', $event->id)->exists()) {
-            return redirect()->route('events.showBySlug', $event->slug);
-        }
-
-        $project = new Project();
-        return view('project.create', compact('project', 'event'));
-    }
 
 
 
@@ -114,6 +111,7 @@ class ProjectController extends Controller
                     break;
             }
         }
+        $validations['authors'] = 'required|array|min:1';
         request()->validate($validations);
 
         $project = new Project([
@@ -177,8 +175,21 @@ class ProjectController extends Controller
             $project->projectFields()->attach($field->id, ['value' => $value]);
         }
 
+
+        $arrayAuthors = $request->input('authors');
+        if ($arrayAuthors != null) {
+            // Asociar los autores seleccionados con el proyecto
+            foreach ($arrayAuthors as $authorId) {
+                echo $authorId;
+                ProjectAuthor::create([
+                    'projects_id' => $project->id,
+                    'users_id' => $authorId
+                ]);
+            }
+        }
+
         return redirect()->route('projects.index')
-            ->with('success', 'Project created successfully.');
+            ->with('success', 'Proyecto creado correctamente.');
     }
 
     /**

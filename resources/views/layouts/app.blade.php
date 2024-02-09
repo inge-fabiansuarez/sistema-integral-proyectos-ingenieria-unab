@@ -29,12 +29,14 @@
     <link href="{{ asset('assets/css/nucleo-svg.css" rel="stylesheet') }}" />
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-
+    @livewireStyles
 
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('assets/css/soft-ui-dashboard.css?v=1.0.3') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet" />
-    @livewireStyles
+
+
+    @stack('css')
 </head>
 
 <body

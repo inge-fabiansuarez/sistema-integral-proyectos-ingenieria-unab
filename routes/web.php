@@ -106,7 +106,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //DE PUEBA
     Route::post('projects-up/{event}', [ProjectController::class, 'createUp'])->name('up-project');
-    Route::get('projects-up/{event}', [ProjectController::class, 'createUpProject'])->name('project-up-create');
+    Route::get('projects-up/{event}', [ProjectController::class, 'create'])->name('project-up-create');
     Route::post('projects-up/{event}/store', [ProjectController::class, 'store'])->name('project-up-create.store');
 });
 
