@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RubricCriterion;
 use App\Models\RubricLevel;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,7 @@ class RubricLevelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(RubricCriterion $criterion = null)
     {
         $rubricLevel = new RubricLevel();
         return view('rubric-level.create', compact('rubricLevel'));
@@ -47,7 +48,7 @@ class RubricLevelController extends Controller
 
         $rubricLevel = RubricLevel::create($request->all());
 
-        return redirect()->route('rubric-levels.index')
+        return redirect()->route('rubrics.show', $rubricLevel->rubricCriterion->rubric)
             ->with('success', 'RubricLevel created successfully.');
     }
 

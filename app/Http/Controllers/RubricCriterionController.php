@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rubric;
 use App\Models\RubricCriterion;
 use Illuminate\Http\Request;
 
@@ -29,9 +30,10 @@ class RubricCriterionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Rubric $rubric = null)
     {
         $rubricCriterion = new RubricCriterion();
+        $rubricCriterion->rubrics_id = $rubric->id;
         return view('rubric-criterion.create', compact('rubricCriterion'));
     }
 
@@ -47,8 +49,8 @@ class RubricCriterionController extends Controller
 
         $rubricCriterion = RubricCriterion::create($request->all());
 
-        return redirect()->route('rubric-criteria.index')
-            ->with('success', 'RubricCriterion created successfully.');
+        return redirect()->route('rubrics.show', $rubricCriterion->rubric)
+            ->with('success', 'El criterio de la rubrica fue creado exitorsamente.');
     }
 
     /**

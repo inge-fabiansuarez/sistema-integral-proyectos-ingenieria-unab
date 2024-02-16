@@ -20,11 +20,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Rubric extends Model
 {
-    
+
     static $rules = [
-		'name' => 'required',
-		'description' => 'required',
-		'total_rating' => 'required',
+        'name' => 'required',
+        'description' => 'required',
+        'total_rating' => 'required',
     ];
 
     protected $perPage = 20;
@@ -34,7 +34,7 @@ class Rubric extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','description','total_rating'];
+    protected $fillable = ['id', 'name', 'description', 'total_rating'];
 
 
     /**
@@ -44,6 +44,4 @@ class Rubric extends Model
     {
         return $this->hasMany('App\Models\RubricCriterion', 'rubrics_id', 'id');
     }
-    
-
 }
