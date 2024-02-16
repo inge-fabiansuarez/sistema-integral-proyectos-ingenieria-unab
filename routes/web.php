@@ -8,6 +8,7 @@ use App\Http\Controllers\ProjectFieldController;
 use App\Http\Controllers\Users\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
+use App\Http\Controllers\RubricController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\Users\RoleController;
 use App\Models\ProjectField;
@@ -108,6 +109,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('projects-up/{event}', [ProjectController::class, 'createUp'])->name('up-project');
     Route::get('projects-up/{event}', [ProjectController::class, 'create'])->name('project-up-create');
     Route::post('projects-up/{event}/store', [ProjectController::class, 'store'])->name('project-up-create.store');
+
+    //rubricas
+    Route::resource('rubricas', RubricController::class)->names('rubrics');
 });
 
 
