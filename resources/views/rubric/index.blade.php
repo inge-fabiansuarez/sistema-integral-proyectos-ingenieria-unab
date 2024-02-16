@@ -9,14 +9,15 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Rubric') }}
+                                {{ __('Rúbrica') }}
                             </span>
 
-                             <div class="float-right">
-                                <a href="{{ route('rubrics.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
+                            <div class="float-right">
+                                <a href="{{ route('rubrics.create') }}" class="btn btn-primary btn-sm float-right"
+                                    data-placement="left">
+                                    {{ __('Crear Nuevo') }}
                                 </a>
-                              </div>
+                            </div>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -32,9 +33,9 @@
                                     <tr>
                                         <th>No</th>
 
-										<th>Name</th>
-										<th>Description</th>
-										<th>Total Rating</th>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th>
+                                        <th>Puntuación Total</th>
 
                                         <th></th>
                                     </tr>
@@ -44,17 +45,22 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
 
-											<td>{{ $rubric->name }}</td>
-											<td>{{ $rubric->description }}</td>
-											<td>{{ $rubric->total_rating }}</td>
+                                            <td>{{ $rubric->name }}</td>
+                                            <td>{{ $rubric->description }}</td>
+                                            <td>{{ $rubric->total_rating }}</td>
 
                                             <td>
-                                                <form action="{{ route('rubrics.destroy',$rubric->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('rubrics.show',$rubric->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('rubrics.edit',$rubric->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form action="{{ route('rubrics.destroy', $rubric->id) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary "
+                                                        href="{{ route('rubrics.show', $rubric->id) }}"><i
+                                                            class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}</a>
+                                                    <a class="btn btn-sm btn-success"
+                                                        href="{{ route('rubrics.edit', $rubric->id) }}"><i
+                                                            class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                                            class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
                                                 </form>
                                             </td>
                                         </tr>

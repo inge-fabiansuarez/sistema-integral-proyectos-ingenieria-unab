@@ -7,25 +7,25 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Rubric</span>
+                            <span class="card-title">{{ __('Mostrar') }} Rúbrica</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('rubrics.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('rubrics.index') }}"> {{ __('Atrás') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body">
 
                         <div class="form-group">
-                            <strong>Name:</strong>
+                            <strong>Nombre:</strong>
                             {{ $rubric->name }}
                         </div>
                         <div class="form-group">
-                            <strong>Description:</strong>
+                            <strong>Descripción:</strong>
                             {{ $rubric->description }}
                         </div>
                         <div class="form-group">
-                            <strong>Total Rating:</strong>
+                            <strong>Puntuación Total:</strong>
                             {{ $rubric->total_rating }}
                         </div>
 

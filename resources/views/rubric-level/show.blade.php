@@ -1,8 +1,4 @@
-@extends('layouts.app')
-
-@section('template_title')
-    {{ $rubricLevel->name ?? "{{ __('Show') Rubric Level" }}
-@endsection
+@extends('layouts.user_type.auth')
 
 @section('content')
     <section class="content container-fluid">
@@ -11,25 +7,25 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Rubric Level</span>
+                            <span class="card-title">{{ __('Mostrar') }} Nivel de Rúbrica</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('rubric-levels.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('rubric-levels.index') }}"> {{ __('Atrás') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body">
-                        
+
                         <div class="form-group">
-                            <strong>Name:</strong>
+                            <strong>Nombre:</strong>
                             {{ $rubricLevel->name }}
                         </div>
                         <div class="form-group">
-                            <strong>Points:</strong>
+                            <strong>Puntos:</strong>
                             {{ $rubricLevel->points }}
                         </div>
                         <div class="form-group">
-                            <strong>Rubric Criteria Id:</strong>
+                            <strong>ID de Criterio de Rúbrica:</strong>
                             {{ $rubricLevel->rubric_criteria_id }}
                         </div>
 

@@ -1,9 +1,4 @@
-@extends('layouts.app')
-
-@section('template_title')
-    {{ $rubricCriterion->name ?? "{{ __('Show') Rubric Criterion" }}
-@endsection
-
+@extends('layouts.user_type.auth')
 @section('content')
     <section class="content container-fluid">
         <div class="row">
@@ -11,21 +6,21 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Rubric Criterion</span>
+                            <span class="card-title">{{ __('Mostrar') }} Criterio de Rúbrica</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('rubric-criteria.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('rubric-criteria.index') }}"> {{ __('Atrás') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body">
-                        
+
                         <div class="form-group">
-                            <strong>Name:</strong>
+                            <strong>Nombre:</strong>
                             {{ $rubricCriterion->name }}
                         </div>
                         <div class="form-group">
-                            <strong>Rubrics Id:</strong>
+                            <strong>ID de Rúbrica:</strong>
                             {{ $rubricCriterion->rubrics_id }}
                         </div>
 

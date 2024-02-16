@@ -9,9 +9,12 @@ use App\Http\Controllers\Users\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\RubricController;
+use App\Http\Controllers\RubricCriterionController;
+use App\Http\Controllers\RubricLevelController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\Users\RoleController;
 use App\Models\ProjectField;
+use App\Models\RubricCriterion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -112,6 +115,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     //rubricas
     Route::resource('rubricas', RubricController::class)->names('rubrics');
+
+    //criterios de la rubrica
+    Route::resource('criterios-de-rubrica', RubricCriterionController::class)->names('rubric-criteria');
+
+    //niveles de los criterios
+    Route::resource('niveles-criterio', RubricLevelController::class)->names('rubric-levels');
 });
 
 

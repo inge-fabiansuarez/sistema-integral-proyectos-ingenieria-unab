@@ -1,9 +1,4 @@
-@extends('layouts.app')
-
-@section('template_title')
-    Rubric Criterion
-@endsection
-
+@extends('layouts.user_type.auth')
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -13,12 +8,12 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Rubric Criterion') }}
+                                {{ __('Criterio de Rúbrica') }}
                             </span>
 
                              <div class="float-right">
                                 <a href="{{ route('rubric-criteria.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
+                                  {{ __('Crear Nuevo') }}
                                 </a>
                               </div>
                         </div>
@@ -35,9 +30,9 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        
-										<th>Name</th>
-										<th>Rubrics Id</th>
+
+										<th>Nombre</th>
+										<th>ID de Rúbrica</th>
 
                                         <th></th>
                                     </tr>
@@ -46,17 +41,17 @@
                                     @foreach ($rubricCriteria as $rubricCriterion)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            
+
 											<td>{{ $rubricCriterion->name }}</td>
 											<td>{{ $rubricCriterion->rubrics_id }}</td>
 
                                             <td>
                                                 <form action="{{ route('rubric-criteria.destroy',$rubricCriterion->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('rubric-criteria.show',$rubricCriterion->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('rubric-criteria.edit',$rubricCriterion->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('rubric-criteria.show',$rubricCriterion->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('rubric-criteria.edit',$rubricCriterion->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
                                                 </form>
                                             </td>
                                         </tr>
