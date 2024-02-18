@@ -116,24 +116,16 @@ Route::group(['middleware' => 'auth'], function () {
     //rubricas
     Route::resource('rubricas', RubricController::class)->names('rubrics');
 
-    // Rutas para RubricCriterion
-    Route::prefix('criterios-de-rubrica')->name('rubric-criteria.')->group(function () {
-        // Ruta para mostrar el formulario de creación
-        Route::get('create/{rubric}', [RubricCriterionController::class, 'create'])->name('create');
 
-        // Rutas para las operaciones CRUD restantes
-        Route::resource('/', RubricCriterionController::class)->except(['create']);
-    });
+    //rubricas
+    Route::resource('criterios-de-rubrica', RubricCriterionController::class)->names('rubric-criteria');
+    Route::get('criterios-de-rubrica/create/{rubric?}', [RubricCriterionController::class, 'create'])->name('rubric-criteria.create');
+
 
     //niveles de los criterios
+    Route::resource('niveles-del-criterio', RubricLevelController::class)->names('rubric-levels');
+    Route::get('niveles-del-criterio/create/{criterion?}', [RubricLevelController::class, 'create'])->name('rubric-levels.create');
 
-    Route::prefix('niveles-criterio')->name('rubric-levels.')->group(function () {
-        // Ruta para mostrar el formulario de creación
-        Route::get('create/{criterion}', [RubricLevelController::class, 'create'])->name('create');
-
-        // Rutas para las operaciones CRUD restantes
-        Route::resource('/', RubricLevelController::class)->except(['create']);
-    });
 });
 
 

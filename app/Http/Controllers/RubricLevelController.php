@@ -102,9 +102,11 @@ class RubricLevelController extends Controller
      */
     public function destroy($id)
     {
-        $rubricLevel = RubricLevel::find($id)->delete();
+        $rubricLevel = RubricLevel::find($id);
+        $rubric = $rubricLevel->rubricCriterion->rubric;
 
-        return redirect()->route('rubric-levels.index')
-            ->with('success', 'RubricLevel deleted successfully');
+        $rubricLevel->delete();
+        return redirect()->route('rubrics.show', $rubric)
+            ->with('success', 'Se elimino el nivel con exito');
     }
 }

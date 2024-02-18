@@ -103,9 +103,10 @@ class RubricCriterionController extends Controller
      */
     public function destroy($id)
     {
-        $rubricCriterion = RubricCriterion::find($id)->delete();
-
-        return redirect()->route('rubric-criteria.index')
-            ->with('success', 'RubricCriterion deleted successfully');
+        $rubricCriterion = RubricCriterion::find($id);
+        $rubric = $rubricCriterion->rubric;
+        $rubricCriterion->delete();
+        return redirect()->route('rubrics.show', $rubric)
+            ->with('success', 'Se elimino el criterio con exito');
     }
 }

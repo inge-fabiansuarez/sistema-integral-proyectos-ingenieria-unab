@@ -143,31 +143,6 @@
                 </a>
             </li>
 
-            <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::is('criterios-de-rubrica*') ? 'active' : '' }}"
-                    href="{{ route('rubric-criteria.index') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1rem;"
-                            class="fas fa-tasks ps-2 pe-2 text-center text-dark {{ Request::is('criterios-de-rubrica*') ? 'text-white' : 'text-dark' }}"
-                            aria-hidden="true"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Criterios rubrica</span>
-                </a>
-            </li>
-
-            <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::is('niveles-criterio*') ? 'active' : '' }}"
-                    href="{{ route('rubric-levels.index') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1rem;"
-                            class="fas fa-layer-group ps-2 pe-2 text-center text-dark {{ Request::is('niveles-criterio*') ? 'text-white' : 'text-dark' }}"
-                            aria-hidden="true"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Niveles del criterio</span>
-                </a>
-            </li>
 
 
 

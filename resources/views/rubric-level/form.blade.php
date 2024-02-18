@@ -11,5 +11,5 @@
         </div>
         <input type="hidden" name="rubric_criteria_id" value="{{ $criterion->id }}">
     </div>
-    <button type="submit" class="btn btn-primary btn-sm">Añadir</button>
+    <button type="submit" class="btn btn-secondary btn-sm">Añadir</button>
 </div>

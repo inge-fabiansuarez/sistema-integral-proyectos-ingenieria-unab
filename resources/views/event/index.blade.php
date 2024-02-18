@@ -37,8 +37,6 @@
                                         <th>Fecha de Apertura</th>
                                         <th>Fecha de Cierre</th>
                                         <th>Creado Por</th>
-                                        <th>Descripción</th>
-
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -51,8 +49,6 @@
                                             <td>{{ $event->opening_date }}</td>
                                             <td>{{ $event->closing_date }}</td>
                                             <td>{{ $event->createdBy->name }}</td>
-                                            <td>{{ $event->description }}</td>
-
                                             <td>
                                                 <form action="{{ route('events.destroy', $event->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary "
