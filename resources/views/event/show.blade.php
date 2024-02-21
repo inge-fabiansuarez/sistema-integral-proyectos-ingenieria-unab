@@ -31,8 +31,7 @@
                     <div class="col-xl-12 col-lg-12 col-md-12 mx-auto">
                         <div class="card z-index-0">
                             <div class="card-header text-center pt-4">
-                                <h5>{{ $event->createdBy->name }}</h5>
-                                <h6>{{ $event->createdBy->about_me }}</h6>
+                                <h5>{{ $event->name }}</h5>
                             </div>
 
                             <div class="card-body">
@@ -53,6 +52,10 @@
                                     <div class="form-group">
                                         <strong>Descripción:</strong>
                                         {{ $event->description }}
+                                    </div>
+                                    <div class="form-group">
+                                        <strong>Evento elaborado por:</strong>
+                                        {{ $event->createdBy->name }}
                                     </div>
                                     <div class="text-center">
                                         <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Subir el

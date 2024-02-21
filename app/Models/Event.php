@@ -46,7 +46,7 @@ class Event extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'opening_date', 'closing_date', 'created_by', 'description', 'img_cover', 'slug', 'password'];
+    protected $fillable = ['name', 'opening_date', 'closing_date', 'created_by', 'description', 'img_cover', 'slug', 'state', 'password'];
 
 
     public function createdBy()
@@ -73,5 +73,11 @@ class Event extends Model
     public function registeredUsers()
     {
         return $this->belongsToMany(User::class, 'events_has_registered_users', 'events_id', 'users_id');
+    }
+
+    public function evaluators()
+    {
+        return $this->belongsToMany(User::class, 'projects_has_evaluators', 'events_id', 'evaluator_id')
+            ->withPivot('projects_id', 'state_evaluation');
     }
 }

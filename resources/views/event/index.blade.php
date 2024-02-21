@@ -32,7 +32,6 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-
                                         <th>Nombre</th>
                                         <th>Fecha de Apertura</th>
                                         <th>Fecha de Cierre</th>
@@ -44,7 +43,6 @@
                                     @foreach ($events as $event)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-
                                             <td>{{ $event->name }}</td>
                                             <td>{{ $event->opening_date }}</td>
                                             <td>{{ $event->closing_date }}</td>
@@ -57,6 +55,10 @@
                                                     <a class="btn btn-sm btn-success"
                                                         href="{{ route('events.edit', $event->id) }}"><i
                                                             class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
+                                                    <a class="btn btn-sm btn-info"
+                                                        href="{{ route('events.indexevaluation', $event->id) }}"><i
+                                                            class="fa fa-fw fa-edit"></i>
+                                                        {{ __('Asignar Evaluación') }}</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i

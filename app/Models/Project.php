@@ -54,4 +54,10 @@ class Project extends Model
         return $this->belongsToMany(ProjectField::class, 'projects_has_field', 'projects_id', 'project_field_id')
             ->withPivot('value');
     }
+
+    public function evaluators()
+    {
+        return $this->belongsToMany(User::class, 'projects_has_evaluators', 'projects_id', 'evaluator_id')
+                    ->withPivot('events_id', 'state_evaluation');
+    }
 }

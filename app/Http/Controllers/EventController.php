@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StateEvaluationUserEnum;
 use App\Models\Event;
+use App\Models\Project;
 use App\Models\ProjectField;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -25,6 +28,7 @@ class EventController extends Controller
         return view('event.index', compact('events'))
             ->with('i', (request()->input('page', 1) - 1) * $events->perPage());
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -171,5 +175,30 @@ class EventController extends Controller
 
         return redirect()->route('events.index')
             ->with('success', 'Evento eliminado correctamente');
+    }
+
+
+    public function indexEvaluation(Event $event)
+    {
+        $users = User::orderBy('name')->get();
+        return view('event.index_evaluation', ['event' => $event, 'users' => $users]);
+    }
+
+
+    /**
+     * Metodo para asignar evaluadores a cada uno de los proyectos
+     */
+    public function setUserEvaluation(Request $request, Project $project)
+    {
+        $eventId = $request->get('eventId');
+
+        // Borrar todos los usuarios asociados al proyecto
+        $project->evaluators()->detach();
+
+        foreach ($request->get('evaluators') as $userId) {
+            $project->evaluators()->attach($userId, ['events_id' => $eventId, 'state_evaluation' => StateEvaluationUserEnum::ASSIGNED->getId()]);
+        }
+        return redirect()->route('events.indexevaluation', $eventId)
+            ->with('success', 'Se asigno evaluador correctamente');;
     }
 }

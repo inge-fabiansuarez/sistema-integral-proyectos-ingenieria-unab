@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('img_cover');
             $table->string('password');
+            $table->integer('state');
             $table->string('slug')->unique();
             $table->timestamps();
 

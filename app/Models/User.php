@@ -50,4 +50,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Event::class, 'events_has_registered_users', 'users_id', 'events_id');
     }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'projects_has_evaluators', 'evaluator_id', 'projects_id')
+            ->withPivot('events_id', 'state_evaluation');
+    }
 }

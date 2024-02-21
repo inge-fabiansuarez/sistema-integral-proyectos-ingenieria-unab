@@ -101,6 +101,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     //events
     Route::resource('events', EventController::class)->middleware('can:event');
+    Route::get('events/{event}/evaluacion', [EventController::class,'indexEvaluation'])->name('events.indexevaluation');
+
+    Route::post('events/{project}/evaluacion', [EventController::class,'setUserEvaluation'])->name('events.setUserEvaluation');
 
     //campos del projecto
     Route::resource('project-fields', ProjectFieldController::class)->names('project-fields')->middleware('can:projectFields');
