@@ -112,6 +112,9 @@ Route::group(['middleware' => 'auth'], function () {
     //Evaluations
     Route::get('mis-evaluaciones/{projectsHasEvaluator}', [RubricEvaluationController::class, 'create'])->name('rubric-evaluations.create');
     Route::post('mis-evaluaciones/{projectsHasEvaluator}', [RubricEvaluationController::class, 'store'])->name('rubric-evaluations.store');
+    Route::get('mis-evaluaciones/{evaluator}/{project}', [RubricEvaluationController::class, 'show'])->name('rubric-evaluations.show');
+    Route::get('evaluaciones/{project}', [RubricEvaluationController::class, 'showByProject'])->name('rubric-evaluations.evaluationByProject');
+
 
     //campos del projecto
     Route::resource('project-fields', ProjectFieldController::class)->names('project-fields')->middleware('can:projectFields');

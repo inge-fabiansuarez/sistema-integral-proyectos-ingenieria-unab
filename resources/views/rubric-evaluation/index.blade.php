@@ -2,6 +2,15 @@
 
 @section('content')
     <div class="container-fluid">
+        @if ($evaluations->count() == 0)
+            <div class="card bg-gradient-default">
+                <div class="card-body">
+                    <blockquote class="blockquote text-white p-3">
+                        <h3>No hay proyecto por evaluar!</h3>
+                    </blockquote>
+                </div>
+            </div>
+        @endif
         @foreach ($evaluations as $evaluation)
             <div class="row mb-4">
                 <div class="col-lg-12 mb-lg-0 mb-4">

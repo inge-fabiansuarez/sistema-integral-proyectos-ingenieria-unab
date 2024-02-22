@@ -112,6 +112,10 @@
                                         <li><a class="dropdown-item border-radius-md" href="javascript:;">Asignar
                                                 evaluadores</a>
                                         </li>
+                                        <li><a class="btn btn-sm btn-info"
+                                                href="{{ route('rubric-evaluations.evaluationByProject', $event->id) }}"><i
+                                                    class="fa fa-fw fa-edit"></i>
+                                                {{ __('Ver evaluaciones') }}</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -192,13 +196,18 @@
                                                                 proyecto</a>
                                                         </li>
                                                         <!-- Button trigger modal -->
-                                                        <button type="button" class="btn bg-gradient-primary"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#a{{ $project->id }}">
-                                                            Asignar Evaluadores
-                                                        </button>
-
-
+                                                        <li>
+                                                            <button type="button" class="btn bg-gradient-primary"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#a{{ $project->id }}">
+                                                                Asignar Evaluadores
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <a class="btn btn-sm btn-info"
+                                                                href="{{ route('rubric-evaluations.evaluationByProject', $project->id) }}"><i
+                                                                    class="fa fa-fw fa-edit"></i>
+                                                                {{ __('Ver evaluaciones') }}</a>
                                                         </li>
 
                                                     </ul>

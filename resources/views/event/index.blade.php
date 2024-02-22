@@ -59,6 +59,7 @@
                                                         href="{{ route('events.indexevaluation', $event->id) }}"><i
                                                             class="fa fa-fw fa-edit"></i>
                                                         {{ __('Asignar Evaluación') }}</a>
+
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i

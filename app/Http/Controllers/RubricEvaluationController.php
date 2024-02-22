@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\Project;
 use App\Models\ProjectsHasEvaluators;
 use App\Models\RubricEvaluation;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 /**
@@ -80,7 +81,7 @@ class RubricEvaluationController extends Controller
             $projectsHasEvaluator->save();
         }
 
-        return redirect()->route('rubric-evaluations.create', $projectsHasEvaluator)
+        return redirect()->route('rubric-evaluations.show', auth()->user()->id, $projectsHasEvaluator->project)
             ->with('success', 'RubricEvaluation created successfully.');
     }
 
@@ -90,12 +91,18 @@ class RubricEvaluationController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    /* public function show($id)
+    public function show(User $evaluator, Project $project)
     {
-        $rubricEvaluation = RubricEvaluation::find($id);
+        $rubricEvaluations = RubricEvaluation::where('projects_id', $project->id)->where('evaluador_id', $evaluator->id)->get();
+        return view('rubric-evaluation.show', compact('rubricEvaluations', 'project'));
+    }
 
-        return view('rubric-evaluation.show', compact('rubricEvaluation'));
-    } */
+    public function showByProject(Project $project)
+    {
+        $projectHasEvaluator = ProjectsHasEvaluators::where('projects_id', $project->id)->paginate(10);
+        return view('rubric-evaluation.show_evaluations', compact('project', 'projectHasEvaluator'));
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -132,7 +139,7 @@ class RubricEvaluationController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-   /*  public function destroy($id)
+    /*  public function destroy($id)
     {
         $rubricEvaluation = RubricEvaluation::find($id)->delete();
 
