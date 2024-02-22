@@ -72,6 +72,22 @@
                 </a>
             </li>
 
+            <li class="nav-item pb-2">
+                <a class="nav-link {{ Request::is('mis-evaluaciones*') ? 'active' : '' }}"
+                    href="{{ route('rubric-evaluations.index') }}">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+
+                        <i style="font-size: 1rem;"
+                            class="fas fa-lg fa-check-circle ps-2 pe-2 text-center {{ Request::is('mis-evaluaciones*') ? 'text-white' : 'text-dark' }}"
+                            aria-hidden="true"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Proyectos a evaluar</span>
+                </a>
+            </li>
+
+
+
             @can('users')
                 <li class="nav-item pb-2">
                     <a class="nav-link {{ Request::is('users*') ? 'active' : '' }}" href="{{ route('user.index') }}">
@@ -85,6 +101,8 @@
                     </a>
                 </li>
             @endcan
+
+
 
             @can('event')
                 <li class="nav-item pb-2">

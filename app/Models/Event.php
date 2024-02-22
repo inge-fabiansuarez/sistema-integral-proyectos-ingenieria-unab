@@ -46,7 +46,7 @@ class Event extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'opening_date', 'closing_date', 'created_by', 'description', 'img_cover', 'slug', 'state', 'password'];
+    protected $fillable = ['name', 'opening_date', 'closing_date', 'created_by', 'description', 'img_cover', 'slug', 'state', 'password', 'rubrics_id'];
 
 
     public function createdBy()
@@ -79,5 +79,10 @@ class Event extends Model
     {
         return $this->belongsToMany(User::class, 'projects_has_evaluators', 'events_id', 'evaluator_id')
             ->withPivot('projects_id', 'state_evaluation');
+    }
+    // Relación con la rubrica
+    public function rubric()
+    {
+        return $this->belongsTo(Rubric::class, 'rubrics_id');
     }
 }

@@ -30,10 +30,10 @@
                         <div class="nav-wrapper position-relative end-0">
                             <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist">
                                 <li class="nav-item">
-                                    <div class="float-right">
+                                   {{--  <div class="float-right">
                                         <a class="btn btn-primary" href="{{ route('projects.index') }}">
                                             {{ __('Atras') }}</a>
-                                    </div>
+                                    </div> --}}
 
                                 </li>
                             </ul>

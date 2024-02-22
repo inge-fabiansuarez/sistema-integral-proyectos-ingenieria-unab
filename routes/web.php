@@ -10,11 +10,13 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\RubricController;
 use App\Http\Controllers\RubricCriterionController;
+use App\Http\Controllers\RubricEvaluationController;
 use App\Http\Controllers\RubricLevelController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\Users\RoleController;
 use App\Models\ProjectField;
 use App\Models\RubricCriterion;
+use App\Models\RubricEvaluation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -101,9 +103,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     //events
     Route::resource('events', EventController::class)->middleware('can:event');
-    Route::get('events/{event}/evaluacion', [EventController::class,'indexEvaluation'])->name('events.indexevaluation');
+    Route::get('events/{event}/evaluacion', [EventController::class, 'indexEvaluation'])->name('events.indexevaluation');
+    Route::post('events/{event}/evaluacion/asignar-rubrica', [EventController::class, 'assingRubric'])->name('events.assingRubric');
+    Route::post('events/{project}/evaluacion', [EventController::class, 'setUserEvaluation'])->name('events.setUserEvaluation');
 
-    Route::post('events/{project}/evaluacion', [EventController::class,'setUserEvaluation'])->name('events.setUserEvaluation');
+    //Evaluations
+    Route::resource('mis-evaluaciones', RubricEvaluationController::class)->names('rubric-evaluations')->only(['index']);
+    //Evaluations
+    Route::get('mis-evaluaciones/{projectsHasEvaluator}', [RubricEvaluationController::class, 'create'])->name('rubric-evaluations.create');
+    Route::post('mis-evaluaciones/{projectsHasEvaluator}', [RubricEvaluationController::class, 'store'])->name('rubric-evaluations.store');
 
     //campos del projecto
     Route::resource('project-fields', ProjectFieldController::class)->names('project-fields')->middleware('can:projectFields');
@@ -128,7 +136,6 @@ Route::group(['middleware' => 'auth'], function () {
     //niveles de los criterios
     Route::resource('niveles-del-criterio', RubricLevelController::class)->names('rubric-levels');
     Route::get('niveles-del-criterio/create/{criterion?}', [RubricLevelController::class, 'create'])->name('rubric-levels.create');
-
 });
 
 

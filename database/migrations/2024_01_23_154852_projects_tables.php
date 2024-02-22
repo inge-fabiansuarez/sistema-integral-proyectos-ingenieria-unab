@@ -25,9 +25,10 @@ return new class extends Migration
             $table->string('password');
             $table->integer('state');
             $table->string('slug')->unique();
-            $table->timestamps();
-
+            $table->unsignedBigInteger('rubrics_id')->nullable();
+            $table->foreign('rubrics_id')->references('id')->on('rubrics')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users');
+            $table->timestamps();
         });
 
         // Projects Table

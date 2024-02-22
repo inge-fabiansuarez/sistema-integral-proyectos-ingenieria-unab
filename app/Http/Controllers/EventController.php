@@ -6,6 +6,7 @@ use App\Enums\StateEvaluationUserEnum;
 use App\Models\Event;
 use App\Models\Project;
 use App\Models\ProjectField;
+use App\Models\Rubric;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -181,7 +182,8 @@ class EventController extends Controller
     public function indexEvaluation(Event $event)
     {
         $users = User::orderBy('name')->get();
-        return view('event.index_evaluation', ['event' => $event, 'users' => $users]);
+        $rubrics = Rubric::all();
+        return view('event.index_evaluation', ['event' => $event, 'users' => $users, 'rubrics' => $rubrics]);
     }
 
 
@@ -200,5 +202,18 @@ class EventController extends Controller
         }
         return redirect()->route('events.indexevaluation', $eventId)
             ->with('success', 'Se asigno evaluador correctamente');;
+    }
+
+    public function assingRubric(Request $request, Event $event)
+    {
+        $request->validate([
+            'rubric' => 'required|exists:rubrics,id'
+        ]);
+
+        $event->rubrics_id = $request->get('rubric');
+        $event->save();
+
+        return redirect()->route('events.indexevaluation', $event)
+            ->with('success', 'Se asigno la rubrica correctamente');
     }
 }

@@ -41,20 +41,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Tabla 'rubric_evaluations'
-        Schema::create('rubric_evaluations', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('projects_id');
-            $table->unsignedBigInteger('evaluador_id');
-            $table->unsignedBigInteger('rubric_criteria_id');
-            $table->unsignedBigInteger('rubric_levels_selected_id');
-            $table->text('comments')->nullable();
-            $table->foreign('projects_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('evaluador_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('rubric_criteria_id')->references('id')->on('rubric_criteria')->onDelete('cascade');
-            $table->foreign('rubric_levels_selected_id')->references('id')->on('rubric_levels')->onDelete('cascade');
-            $table->timestamps();
-        });
+
 
 
     }
@@ -66,8 +53,6 @@ return new class extends Migration
      */
     public function down()
     {
-
-        Schema::dropIfExists('rubric_evaluations');
         Schema::dropIfExists('rubric_levels');
         Schema::dropIfExists('rubric_criteria');
         Schema::dropIfExists('rubrics');

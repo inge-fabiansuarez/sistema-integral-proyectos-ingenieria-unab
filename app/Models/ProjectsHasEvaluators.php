@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Models;
 
 use App\Models\Project;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Models\Event;
+use Illuminate\Database\Eloquent\Model;
 
-class ProjectsHasEvaluators extends Controller
+class ProjectsHasEvaluators extends Model
 {
     protected $table = 'projects_has_evaluators';
-    protected $primaryKey = ['projects_id', 'evaluator_id'];
-    public $incrementing = false;
+    protected $primaryKey = 'id';
     protected $fillable = ['projects_id', 'evaluator_id', 'state_evaluation'];
 
     public function project()
@@ -21,5 +21,10 @@ class ProjectsHasEvaluators extends Controller
     public function evaluator()
     {
         return $this->belongsTo(User::class, 'evaluator_id');
+    }
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class, 'events_id');
     }
 }

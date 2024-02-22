@@ -12,30 +12,50 @@
                     </div>
 
                     <div class="card-body">
-                        <form role="form text-left" method="POST" action="{{ route('up-project', $event) }}">
+
+
+                        <div class="form-group">
+                            <strong>Nombre:</strong>
+                            {{ $event->name }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Fecha de Apertura:</strong>
+                            {{ $event->opening_date }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Fecha de Cierre:</strong>
+                            {{ $event->closing_date }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Descripción:</strong>
+                            {{ $event->description }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Evento elaborado por:</strong>
+                            {{ $event->createdBy->name }}
+                        </div>
+                        <form action="{{ route('events.assingRubric', $event) }}" method="post">
                             @csrf
                             <div class="form-group">
-                                <strong>Nombre:</strong>
-                                {{ $event->name }}
+                                <strong>Asignar Rubrica:</strong>
+                                <select name="rubric" class="form-control form-control-sm"
+                                    @if ($event->rubrics_id != null) @readonly(true) @endif>
+                                    <option value="">--seleccionar--</option>
+                                    @foreach ($rubrics as $rubric)
+                                        <option value="{{ $rubric->id }}"
+                                            @if ($rubric->id == $event->rubrics_id) @selected(true) @endif>
+                                            {{ $rubric->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('rubric')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
-                            <div class="form-group">
-                                <strong>Fecha de Apertura:</strong>
-                                {{ $event->opening_date }}
-                            </div>
-                            <div class="form-group">
-                                <strong>Fecha de Cierre:</strong>
-                                {{ $event->closing_date }}
-                            </div>
-                            <div class="form-group">
-                                <strong>Descripción:</strong>
-                                {{ $event->description }}
-                            </div>
-                            <div class="form-group">
-                                <strong>Evento elaborado por:</strong>
-                                {{ $event->createdBy->name }}
-                            </div>
-
+                            <button type="submit" class="btn btn-block bg-gradient-success mb-3"
+                                data-bs-toggle="modal">Asignar Rúbrica</button>
                         </form>
+
+
                         <div class="col-md-4">
                             <button type="button" class="btn btn-block bg-gradient-danger mb-3" data-bs-toggle="modal"
                                 data-bs-target="#modal-notification">Cerrar Evento</button>
