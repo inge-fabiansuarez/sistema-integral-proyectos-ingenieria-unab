@@ -43,7 +43,27 @@ class HomeController extends Controller
                 'projectsLastMonth' => Project::whereBetween('created_at', [Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->endOfMonth()])
                     ->count(),
                 'activeUsers' => $activeUsers,
-                'percentageActiveUsers' => $percentageActiveUsers
+                'percentageActiveUsers' => $percentageActiveUsers,
+                'activeUsersByMonth' => User::selectRaw('YEAR(last_login_at) as year, MONTH(last_login_at) as month, COUNT(*) as count')
+                    ->whereNotNull('last_login_at')
+                    ->groupBy('year', 'month')
+                    ->orderBy('year')
+                    ->orderBy('month')
+                    ->get(),
+                'registeredUsersByMonth' => User::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as count')
+                    ->groupBy('year', 'month')
+                    ->orderBy('year')
+                    ->orderBy('month')
+                    ->get(),
+                'months' => collect(range(1, 12))->map(function ($month) {
+                    return Carbon::create(null, $month, 1)->format('M'); // Formato abreviado de mes (por ejemplo, "Jan", "Feb", etc.)
+                }),
+                'keywordFrequency' => Project::join('keyword_project', 'projects.id', '=', 'keyword_project.project_id')
+                    ->join('keywords', 'keyword_project.keyword_id', '=', 'keywords.id')
+                    ->selectRaw('keywords.name, COUNT(*) as frequency')
+                    ->groupBy('keywords.name')
+                    ->orderByDesc('frequency')
+                    ->paginate(10)
             ]
         ]);
     }

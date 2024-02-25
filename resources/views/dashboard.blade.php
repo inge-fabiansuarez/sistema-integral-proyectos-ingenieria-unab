@@ -151,38 +151,7 @@
             </div>
         </div>
 
-        <script>
-            // Obtener el contexto del lienzo del gráfico
-            var ctx = document.getElementById('chart-bars').getContext('2d');
 
-            // Configurar el gráfico de barras
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Usuarios Totales', 'Usuarios Activos'],
-                    datasets: [{
-                        label: 'Usuarios',
-                        data: [{{ $dataDashborad['totalUsers'] }}, {{ $dataDashborad['activeUsers'] }}],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)', // Color de fondo para "Usuarios Totales"
-                            'rgba(54, 162, 235, 0.2)' // Color de fondo para "Usuarios Activos"
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)', // Borde del color para "Usuarios Totales"
-                            'rgba(54, 162, 235, 1)' // Borde del color para "Usuarios Activos"
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true // Empezar el eje Y desde 0
-                        }
-                    }
-                }
-            });
-        </script>
 
     </div>
     <div class="row my-4">
@@ -292,84 +261,11 @@
 @push('dashboard')
     <script>
         window.onload = function() {
-            var ctx = document.getElementById("chart-bars").getContext("2d");
+            var ctx2 = document.getElementById("chart-line").getContext("2d");
+
 
             var dates = {!! json_encode($dataDashborad['projectsByDay']->pluck('date')) !!};
             var counts = {!! json_encode($dataDashborad['projectsByDay']->pluck('count')) !!};
-
-            new Chart(ctx, {
-
-                type: "bar",
-                data: {
-                    labels: dates.map(month => {
-                        // Convertir el número del mes a su nombre abreviado
-                        return new Date(2000, month - 1, 1).toLocaleString('default', {
-                            month: 'short'
-                        });
-                    }),
-                    datasets: [{
-                        label: "Proyectos",
-                        tension: 0.4,
-                        borderWidth: 0,
-                        pointRadius: 0,
-                        borderColor: "#cb0c9f",
-                        borderWidth: 3,
-                        fill: true,
-                        data: counts,
-                        maxBarThickness: 6
-                    }, ],
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false,
-                        }
-                    },
-                    interaction: {
-                        intersect: false,
-                        mode: 'index',
-                    },
-                    scales: {
-                        y: {
-                            grid: {
-                                drawBorder: false,
-                                display: false,
-                                drawOnChartArea: false,
-                                drawTicks: false,
-                            },
-                            ticks: {
-                                suggestedMin: 0,
-                                suggestedMax: 500,
-                                beginAtZero: true,
-                                padding: 15,
-                                font: {
-                                    size: 14,
-                                    family: "Open Sans",
-                                    style: 'normal',
-                                    lineHeight: 2
-                                },
-                                color: "#fff"
-                            },
-                        },
-                        x: {
-                            grid: {
-                                drawBorder: false,
-                                display: false,
-                                drawOnChartArea: false,
-                                drawTicks: false
-                            },
-                            ticks: {
-                                display: false
-                            },
-                        },
-                    },
-                },
-            });
-
-
-            var ctx2 = document.getElementById("chart-line").getContext("2d");
 
             var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
 
@@ -457,5 +353,51 @@
                 },
             });
         }
+    </script>
+
+    <script>
+        // Obtener el contexto del lienzo del gráfico
+        var ctx = document.getElementById('chart-bars').getContext('2d');
+
+        // Configurar el gráfico de barras
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: {!! json_encode($dataDashborad['months']) !!},
+                datasets: [{
+                        label: "Usuarios Activos",
+                        backgroundColor: "rgba(255, 0, 0, 1)",
+                        borderColor: "rgba(255, 99, 132, 1)",
+                        borderWidth: 1,
+                        data: {!! json_encode($dataDashborad['activeUsersByMonth']->pluck('count')) !!}
+                    },
+                    {
+                        label: "Usuarios Registrados",
+                        backgroundColor: "rgba(0, 0, 255, 1)",
+                        borderColor: "rgba(54, 162, 235, 1)",
+                        borderWidth: 1,
+                        data: {!! json_encode($dataDashborad['registeredUsersByMonth']->pluck('count')) !!}
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
     </script>
 @endpush
