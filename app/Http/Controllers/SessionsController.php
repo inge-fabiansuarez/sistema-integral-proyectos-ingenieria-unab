@@ -16,18 +16,22 @@ class SessionsController extends Controller
     public function store()
     {
         $attributes = request()->validate([
-            'email'=>'required|email',
-            'password'=>'required'
+            'email' => 'required|email',
+            'password' => 'required'
         ]);
 
-        if(Auth::attempt($attributes))
-        {
-            session()->regenerate();
-            return redirect()->intended(route('dashboard'))->with(['success'=>'You are logged in.']);
-        }
-        else{
+        if (Auth::attempt($attributes)) {
+            // Obtener el modelo del usuario autenticado
+            $user = Auth::user();
+            // Actualizar el campo last_login_at del usuario
+            $user->last_login_at = now();
+            $user->save();
 
-            return back()->withErrors(['email'=>'Email or password invalid.']);
+            session()->regenerate();
+            return redirect()->intended(route('dashboard'))->with(['success' => 'You are logged in.']);
+        } else {
+
+            return back()->withErrors(['email' => 'Email or password invalid.']);
         }
     }
 
@@ -36,6 +40,6 @@ class SessionsController extends Controller
 
         Auth::logout();
 
-        return redirect('/login')->with(['success'=>'You\'ve been logged out.']);
+        return redirect('/login')->with(['success' => 'You\'ve been logged out.']);
     }
 }
