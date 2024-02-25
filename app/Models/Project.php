@@ -58,6 +58,11 @@ class Project extends Model
     public function evaluators()
     {
         return $this->belongsToMany(User::class, 'projects_has_evaluators', 'projects_id', 'evaluator_id')
-                    ->withPivot('events_id', 'state_evaluation');
+            ->withPivot('events_id', 'state_evaluation');
+    }
+
+    public function keywords()
+    {
+        return $this->belongsToMany(Keyword::class);
     }
 }

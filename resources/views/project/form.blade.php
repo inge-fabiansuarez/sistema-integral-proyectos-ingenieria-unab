@@ -17,10 +17,24 @@
             {{ Form::textarea('description', $project->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Descripción', 'rows' => 3]) }}
             {!! $errors->first('description', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+        <div class="form-group">
+            {{ Form::label('keywords', 'Palabras Clave') }}
+            <select class="form-control select2" multiple="multiple" name="keywords[]" id="keywordsSelect">
+                <!-- Itera sobre las palabras clave disponibles -->
+                @foreach ($keywords as $keyword)
+                    <option value="{{ $keyword->id }}">{{ $keyword->name }}</option>
+                @endforeach
+            </select>
+            <!-- Manejo de errores -->
+            {!! $errors->first(
+                'keywords',
+                '<div style="color: #fd5c70; font-size: .875em;margin-top: 0.25rem;width: 100%;" class="">:message</div>',
+            ) !!}
+        </div>
 
         <div class="form-group">
             {{ Form::label('authors', 'Autores') }}
-            <select class="form-control" multiple="multiple" name="authors[]" id="authorsSelect">
+            <select class="form-control select2-authors" multiple="multiple" name="authors[]" id="authorsSelect">
                 <!-- Aquí puedes iterar sobre los autores disponibles -->
                 @foreach ($authors as $author)
                     <option value="{{ $author->id }}">{{ $author->name }}</option>
@@ -76,3 +90,50 @@
         <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
     </div>
 </div>
+
+@push('css')
+    <!-- CSS de Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSS de Select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+@endpush
+@push('js')
+    <!-- JS de Bootstrap (jQuery debe incluirse antes) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- JS de Select2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                tags: true,
+                tokenSeparators: [','], // Esto permite separar las etiquetas con comas o espacios
+                createTag: function(params) {
+                    var term = $.trim(params.term);
+                    if (term === '') {
+                        return null;
+                    }
+                    return {
+                        id: term,
+                        text: term,
+                        newTag: true
+                    }
+                }
+            });
+            $('.select2').on('select2:opening', function(e) {
+                var $select = $(this);
+
+                // Evitar que la tecla Espacio cree una nueva etiqueta
+                $(this).on('keydown', function(e) {
+                    if (e.keyCode === 32) { // 32 es el código de la tecla Espacio
+                        e.stopPropagation();
+                        return false;
+                    }
+                });
+            });
+            $('.select2-authors').select2();
+        });
+    </script>
+@endpush

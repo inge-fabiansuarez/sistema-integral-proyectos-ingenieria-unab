@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\TypeFieldProjectEnum;
 use App\Models\Event;
+use App\Models\Keyword;
 use App\Models\Project;
 use App\Models\ProjectAuthor;
 use App\Models\ProjectField;
@@ -38,6 +39,7 @@ class ProjectController extends Controller
     {
         // Obtener el usuario
         $user = User::find(auth()->user()->id);
+        $keywords = Keyword::all();
 
         // Verificar si el usuario tiene el evento con el ID dado
         if (!$user->registeredEvents()->where('events.id', $event->id)->exists()) {
@@ -46,7 +48,7 @@ class ProjectController extends Controller
 
         $project = new Project();
         $authors =  User::orderBy('name', 'asc')->get();
-        return view('project.create', compact('project', 'event', 'authors'));
+        return view('project.create', compact('project', 'event', 'authors', 'keywords'));
     }
 
     public function createUp(Request $request, Event $event)
@@ -96,7 +98,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
+        //dd($request->get('keywords'));
         $idEvent = $request->input('event');
         $event = Event::find($idEvent);
         //dd($event);
@@ -187,6 +189,24 @@ class ProjectController extends Controller
                 ]);
             }
         }
+
+        $keywords = $request->input('keywords');
+
+        foreach ($keywords as $keyword) {
+            $existingKeyword = Keyword::where('name', $keyword)->first();
+
+            if (!$existingKeyword) {
+                // La palabra clave no existe, así que la creamos
+                $newKeyword = Keyword::create(['name' => $keyword]);
+
+                // Ahora relacionamos la nueva palabra clave con el proyecto
+                $project->keywords()->attach($newKeyword->id);
+            } else {
+                // La palabra clave ya existe, solo la relacionamos con el proyecto
+                $project->keywords()->attach($existingKeyword->id);
+            }
+        }
+
 
         return redirect()->route('projects.index')
             ->with('success', 'Proyecto creado correctamente.');

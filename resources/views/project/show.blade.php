@@ -30,7 +30,7 @@
                         <div class="nav-wrapper position-relative end-0">
                             <ul class="nav nav-pills nav-fill p-1 bg-transparent" role="tablist">
                                 <li class="nav-item">
-                                   {{--  <div class="float-right">
+                                    {{--  <div class="float-right">
                                         <a class="btn btn-primary" href="{{ route('projects.index') }}">
                                             {{ __('Atras') }}</a>
                                     </div> --}}
@@ -62,6 +62,24 @@
                     </div>
                 </div>
 
+                <div class="col-12 col-xl-9 m-2">
+                    <div class="card h-100">
+                        <div class="card-header pb-0 p-3">
+                            <div class="row">
+                                <div class="col-md-8 d-flex align-items-center">
+                                    <h6 class="mb-0">Palabras clave</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-3">
+                            <ul class="list-unstyled">
+                                @foreach ($project->keywords as $keyword)
+                                    <li>{{ $keyword->name }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 @foreach ($project->projectFields as $field)
                     <div class="col-12 col-xl-9 m-2">
                         <div class="card h-100">
