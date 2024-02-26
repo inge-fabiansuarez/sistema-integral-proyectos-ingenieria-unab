@@ -66,7 +66,7 @@ class HomeController extends Controller
                     ->orderBy('year')
                     ->orderBy('month')
                     ->get(),
-                'registeredUsersByMonth' => User::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as count')
+                'registeredUsersByMonth' => User::selectRaw('EXTRACT(YEAR FROM created_at) as year, EXTRACT(MONTH FROM created_at) as month, COUNT(*) as count')
                     ->groupBy('year', 'month')
                     ->orderBy('year')
                     ->orderBy('month')
