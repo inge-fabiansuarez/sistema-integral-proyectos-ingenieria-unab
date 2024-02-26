@@ -60,7 +60,7 @@ class HomeController extends Controller
                     ->count(),
                 'activeUsers' => $activeUsers,
                 'percentageActiveUsers' => $percentageActiveUsers,
-                'activeUsersByMonth' => User::selectRaw('YEAR(last_login_at) as year, MONTH(last_login_at) as month, COUNT(*) as count')
+                'activeUsersByMonth' => User::selectRaw('EXTRACT(YEAR FROM last_login_at) as year, EXTRACT(MONTH FROM last_login_at) as month, COUNT(*) as count')
                     ->whereNotNull('last_login_at')
                     ->groupBy('year', 'month')
                     ->orderBy('year')
