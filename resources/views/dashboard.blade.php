@@ -154,6 +154,28 @@
 
 
     </div>
+
+    <div class="row mt-4">
+        <div class="col-lg-12">
+            <div class="card z-index-2">
+                <div class="card-header pb-0">
+                    <h6>Frecuencia de Temas</h6>
+                    {{-- <p class="text-sm">
+                        <i class="fa fa-arrow-up text-success"></i>
+                        <span class="font-weight-bold">{{ $dataDashborad['projectsLastMonth'] }} nuevos proyectos</span> en
+                        el último mes
+                    </p> --}}
+                </div>
+                <div class="card-body p-3">
+
+                    <div class="chart">
+                        <canvas id="bar-chart-horizontal" class="chart-canvas" height="300px"></canvas>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row my-4">
         <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
             <div class="card">
@@ -255,6 +277,10 @@
                 </div>
             </div>
         </div>
+
+
+
+
 
     </div>
 @endsection
@@ -398,6 +424,83 @@
                     }
                 }
             }
+        });
+    </script>
+
+
+    <script>
+        var ctx6 = document.getElementById("bar-chart-horizontal").getContext("2d");
+        var data = @json($keywordChartData);
+
+        // Definir colores para las barras
+        var colors = ['#3A416F', '#4CAF50', '#FFC107', '#9C27B0', '#FF5722', '#00BCD4'];
+
+        new Chart(ctx6, {
+            type: "bar",
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: "Keyword Frequency",
+                    backgroundColor: colors,
+                    data: data.data,
+                    fill: false
+                }],
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            drawBorder: false,
+                            display: true,
+                            drawOnChartArea: true,
+                            drawTicks: false,
+                            borderDash: [5, 5]
+                        },
+                        ticks: {
+                            display: true,
+                            padding: 10,
+                            color: '#9ca2b7'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Palabras',
+                            color: '#9ca2b7',
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: true,
+                            drawTicks: true,
+                        },
+                        ticks: {
+                            display: true,
+                            color: '#9ca2b7',
+                            padding: 10
+                        },
+                        title: {
+                            display: true,
+                            text: 'Frecuencia',
+                            color: '#9ca2b7',
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                },
+            },
         });
     </script>
 @endpush

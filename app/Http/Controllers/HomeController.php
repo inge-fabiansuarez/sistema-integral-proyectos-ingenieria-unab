@@ -23,6 +23,22 @@ class HomeController extends Controller
         // Verificar si el total de usuarios es mayor que cero antes de calcular el porcentaje
         $percentageActiveUsers = ($totalUsers > 0) ? ($activeUsers / $totalUsers) * 100 : 0;
 
+
+        // Otras consultas...
+
+        $keywordFrequency = Project::join('keyword_project', 'projects.id', '=', 'keyword_project.project_id')
+            ->join('keywords', 'keyword_project.keyword_id', '=', 'keywords.id')
+            ->selectRaw('keywords.name, COUNT(*) as frequency')
+            ->whereBetween('projects.created_at', [Carbon::now()->subMonths(6), Carbon::now()])
+            ->groupBy('keywords.name')
+            ->orderByDesc('frequency')
+            ->take(10)
+            ->get();
+
+        $labels = $keywordFrequency->pluck('name');
+        $data = $keywordFrequency->pluck('frequency');
+
+
         return view('dashboard', [
             'dataDashborad' => [
                 'totalUsers' => $totalUsers,
@@ -58,12 +74,11 @@ class HomeController extends Controller
                 'months' => collect(range(1, 12))->map(function ($month) {
                     return Carbon::create(null, $month, 1)->format('M'); // Formato abreviado de mes (por ejemplo, "Jan", "Feb", etc.)
                 }),
-                'keywordFrequency' => Project::join('keyword_project', 'projects.id', '=', 'keyword_project.project_id')
-                    ->join('keywords', 'keyword_project.keyword_id', '=', 'keywords.id')
-                    ->selectRaw('keywords.name, COUNT(*) as frequency')
-                    ->groupBy('keywords.name')
-                    ->orderByDesc('frequency')
-                    ->paginate(10)
+
+            ],
+            'keywordChartData' => [
+                'labels' => $labels,
+                'data' => $data,
             ]
         ]);
     }
