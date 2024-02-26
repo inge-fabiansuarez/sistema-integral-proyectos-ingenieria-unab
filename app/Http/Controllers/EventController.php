@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\StateEvaluationUserEnum;
+use App\Enums\StateEventEnum;
 use App\Models\Event;
 use App\Models\Project;
 use App\Models\ProjectField;
@@ -59,6 +60,7 @@ class EventController extends Controller
         // Crear el evento
         $event = new Event($request->all());
         $event->created_by = auth()->user()->id;
+        $event->state = StateEventEnum::OPEN->getId();
 
         // Generar y asignar el slug a partir del título
         $event->slug = Str::slug($request->input('title'));

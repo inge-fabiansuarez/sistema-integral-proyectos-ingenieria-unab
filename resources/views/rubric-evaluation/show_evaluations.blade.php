@@ -36,13 +36,13 @@
                                                 <th
                                                     class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                     Evaluador</th>
-                                                {{-- <th
-                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                    Function</th> --}}
+
                                                 <th
                                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                     Estado Evaluación</th>
-
+                                                <th
+                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                    Total Calificación</th>
                                                 <th class="text-secondary opacity-7"></th>
                                             </tr>
                                         </thead>
@@ -64,10 +64,7 @@
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    {{--  <td>
-                                                        <p class="text-xs font-weight-bold mb-0">Manager</p>
-                                                        <p class="text-xs text-secondary mb-0">Organization</p>
-                                                    </td> --}}
+
                                                     <td class="align-middle text-center">
 
                                                         @switch($evaluatorAssignment->state_evaluation)
@@ -84,11 +81,25 @@
 
 
                                                     </td>
+                                                    <td>
+
+                                                        @switch($evaluatorAssignment->state_evaluation)
+                                                            @case(App\Enums\StateEvaluationUserEnum::ASSIGNED->getId())
+                                                                <p class="text text-secondary mb-0">Sin evaluación</p>
+                                                            @break
+
+                                                            @case(App\Enums\StateEvaluationUserEnum::EVALUATED->getId())
+                                                                <p class="text text-secondary mb-0">{{$evaluatorAssignment->getTotalEvaluationPoints($evaluatorAssignment->evaluator)}}</p>
+                                                            @break
+
+                                                            @default
+                                                        @endswitch
+
+                                                    </td>
                                                     <td class="align-middle">
 
                                                         @switch($evaluatorAssignment->state_evaluation)
                                                             @case(App\Enums\StateEvaluationUserEnum::ASSIGNED->getId())
-
                                                             @break
 
                                                             @case(App\Enums\StateEvaluationUserEnum::EVALUATED->getId())

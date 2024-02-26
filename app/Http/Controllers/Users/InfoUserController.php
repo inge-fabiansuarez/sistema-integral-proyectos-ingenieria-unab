@@ -46,20 +46,17 @@ class InfoUserController extends Controller
             User::where('id', Auth::user()->id)->update([
                 'profile_image' => $imagePath,
             ]);
-
-            User::where('id', Auth::user()->id)
-                ->update([
-                    'name'    => $attributes['name'],
-                    'email' => $attribute['email'],
-                    'phone'     => $attributes['phone'],
-                    'location' => $attributes['location'],
-                    'about_me'    => $attributes["about_me"],
-                ]);
-
-
-            return redirect('/user-profile')->with('success', 'Profile updated successfully');
-        } else {
-            echo "Error";
         }
+        User::where('id', Auth::user()->id)
+            ->update([
+                'name'    => $attributes['name'],
+                'email' => $attribute['email'],
+                'phone'     => $attributes['phone'],
+                'location' => $attributes['location'],
+                'about_me'    => $attributes["about_me"],
+            ]);
+
+
+        return redirect('/user-profile')->with('success', 'Perfil actualizado correctamente');
     }
 }

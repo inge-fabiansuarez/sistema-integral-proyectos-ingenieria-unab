@@ -26,5 +26,16 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+        DB::table('users')->insert([
+            'id' => 2,
+            'name' => 'Eliana Galvis',
+            'email' => 'fonoeliana22@gmail.com',
+            'password' => Hash::make('secret'),
+            'phone' => '3229243184',
+            'location' => 'Calle 10 # 21-67 apt 602',
+            'about_me' => 'Ingeniero de mecanica',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 }

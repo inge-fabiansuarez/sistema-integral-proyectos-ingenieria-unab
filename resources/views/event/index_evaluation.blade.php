@@ -121,8 +121,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body px-0 pb-2">
-                        <div class="table-responsive">
+                    <div class="card-body">
+
                             <table class="table align-items-center mb-0">
                                 <thead>
                                     <tr>
@@ -268,7 +268,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                        </div>
+
                     </div>
                 </div>
             </div>

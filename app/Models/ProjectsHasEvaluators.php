@@ -27,4 +27,22 @@ class ProjectsHasEvaluators extends Model
     {
         return $this->belongsTo(Event::class, 'events_id');
     }
+
+    public function getTotalEvaluationPoints(User $evaluator)
+    {
+        $totalPointsAllLevels = 0;
+        $totalPointsEvaluation = 0;
+        $rubric = $this->event->rubric;
+
+        foreach ($rubric->rubricCriterias as $criteria) {
+            foreach ($criteria->rubricLevels as $level) {
+                $totalPointsAllLevels += $level->points;
+            }
+        }
+        $rubricEvaluations = RubricEvaluation::where('projects_id', $this->project->id)->where('evaluador_id', $evaluator->id)->get();
+        foreach ($rubricEvaluations as $evalucion) {
+            $totalPointsEvaluation +=  $evalucion->rubricLevel->points;
+        }
+        return ($totalPointsEvaluation * $rubric->total_rating) / $totalPointsAllLevels;
+    }
 }

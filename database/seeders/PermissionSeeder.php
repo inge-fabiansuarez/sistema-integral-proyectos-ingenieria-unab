@@ -19,25 +19,18 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'id' => 2,
-            'name' => 'Camilo Salazar Perez',
-            'email' => 'fabian280999@gmail.com',
-            'password' => Hash::make('secret'),
-            'phone' => '3229243184',
-            'location' => 'Calle 10 # 21-67 apt 602',
-            'about_me' => 'Ingeniero de mecanica',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
+
         $userSuperAdmin = User::find(1);
-        $userEstudiante = User::find(2);
+        $userProfesor = User::find(2);
 
         $roleSuperAdmin = Role::create([
             'name' => 'SuperAdmin'
         ]);
         $roleEstudiante = Role::create([
             'name' => 'Estudiante'
+        ]);
+        $roleProfesor = Role::create([
+            'name' => 'Profesor'
         ]);
         $permisionUsers = Permission::create([
             'name' => 'users',
@@ -55,13 +48,38 @@ class PermissionSeeder extends Seeder
             'name' => 'projects',
             'description' => 'CRUD Proyectos'
         ]);
+
+        $permissionProyectosAEvaluar = Permission::create([
+            'name' => 'projectToEvaluate',
+            'description' => 'Entrar a la sección de proyectos a evaluar'
+        ]);
+        $permissionRubric = Permission::create([
+            'name' => 'rubrics',
+            'description' => 'CRUD Rubricas'
+        ]);
+        $permissionEvents = Permission::create([
+            'name' => 'events',
+            'description' => 'CRUD Eventos'
+        ]);
         $roleSuperAdmin->givePermissionTo([
             $permisionUsers,
             $permisionEventNormal,
             $permissionProjectFields,
-            $permissionProjects
+            $permissionProjects,
+            $permissionProyectosAEvaluar,
+            $permissionRubric,
+
         ]);
-        $userEstudiante->assignRole($roleEstudiante);
+        $roleProfesor->givePermissionTo([
+            $permissionProyectosAEvaluar,
+            $permissionRubric,
+            $permissionEvents,
+            $permisionEventNormal
+        ]);
+        $roleEstudiante->givePermissionTo([
+            $permissionProjects,
+        ]);
         $userSuperAdmin->assignRole($roleSuperAdmin);
+        $userProfesor->assignRole($roleProfesor);
     }
 }

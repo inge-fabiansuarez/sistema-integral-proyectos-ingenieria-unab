@@ -101,24 +101,23 @@ Route::group(['middleware' => 'auth'], function () {
 
     //events
     Route::resource('events', EventController::class)->middleware('can:event');
-    Route::get('events/{event}/evaluacion', [EventController::class, 'indexEvaluation'])->name('events.indexevaluation');
-    Route::post('events/{event}/evaluacion/asignar-rubrica', [EventController::class, 'assingRubric'])->name('events.assingRubric');
-    Route::post('events/{project}/evaluacion', [EventController::class, 'setUserEvaluation'])->name('events.setUserEvaluation');
+    Route::get('events/{event}/evaluacion', [EventController::class, 'indexEvaluation'])->name('events.indexevaluation')->middleware('can:event');
+    Route::post('events/{event}/evaluacion/asignar-rubrica', [EventController::class, 'assingRubric'])->name('events.assingRubric')->middleware('can:event');
+    Route::post('events/{project}/evaluacion', [EventController::class, 'setUserEvaluation'])->name('events.setUserEvaluation')->middleware('can:event');
 
     //Evaluations
-    Route::resource('mis-evaluaciones', RubricEvaluationController::class)->names('rubric-evaluations')->only(['index']);
-    //Evaluations
-    Route::get('mis-evaluaciones/{projectsHasEvaluator}', [RubricEvaluationController::class, 'create'])->name('rubric-evaluations.create');
-    Route::post('mis-evaluaciones/{projectsHasEvaluator}', [RubricEvaluationController::class, 'store'])->name('rubric-evaluations.store');
-    Route::get('mis-evaluaciones/{evaluator}/{project}', [RubricEvaluationController::class, 'show'])->name('rubric-evaluations.show');
-    Route::get('evaluaciones/{project}', [RubricEvaluationController::class, 'showByProject'])->name('rubric-evaluations.evaluationByProject');
+    Route::resource('mis-evaluaciones', RubricEvaluationController::class)->names('rubric-evaluations')->only(['index'])->middleware('can:projectToEvaluate');
+    Route::get('mis-evaluaciones/{projectsHasEvaluator}', [RubricEvaluationController::class, 'create'])->name('rubric-evaluations.create')->middleware('can:projectToEvaluate');
+    Route::post('mis-evaluaciones/{projectsHasEvaluator}', [RubricEvaluationController::class, 'store'])->name('rubric-evaluations.store')->middleware('can:projectToEvaluate');
+    Route::get('mis-evaluaciones/{evaluator}/{project}', [RubricEvaluationController::class, 'show'])->name('rubric-evaluations.show')->middleware('can:projectToEvaluate');
+    Route::get('evaluaciones/{project}', [RubricEvaluationController::class, 'showByProject'])->name('rubric-evaluations.evaluationByProject')->middleware('can:projectToEvaluate');
 
 
     //campos del projecto
     Route::resource('project-fields', ProjectFieldController::class)->names('project-fields')->middleware('can:projectFields');
 
     //Projects
-    Route::resource('projects', ProjectController::class)->names('projects')->middleware('can:projects');
+    Route::resource('projects', ProjectController::class)->names('projects');
 
     //DE PUEBA
     Route::post('projects-up/{event}', [ProjectController::class, 'createUp'])->name('up-project');
@@ -126,12 +125,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('projects-up/{event}/store', [ProjectController::class, 'store'])->name('project-up-create.store');
 
     //rubricas
-    Route::resource('rubricas', RubricController::class)->names('rubrics');
+    Route::resource('rubricas', RubricController::class)->names('rubrics')->middleware('can:rubrics');
 
 
     //rubricas
-    Route::resource('criterios-de-rubrica', RubricCriterionController::class)->names('rubric-criteria');
-    Route::get('criterios-de-rubrica/create/{rubric?}', [RubricCriterionController::class, 'create'])->name('rubric-criteria.create');
+    Route::resource('criterios-de-rubrica', RubricCriterionController::class)->names('rubric-criteria')->middleware('can:rubrics');
+    Route::get('criterios-de-rubrica/create/{rubric?}', [RubricCriterionController::class, 'create'])->name('rubric-criteria.create')->middleware('can:rubrics');
 
 
     //niveles de los criterios

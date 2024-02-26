@@ -81,8 +81,8 @@ class RubricEvaluationController extends Controller
             $projectsHasEvaluator->save();
         }
 
-        return redirect()->route('rubric-evaluations.show', auth()->user()->id, $projectsHasEvaluator->project)
-            ->with('success', 'RubricEvaluation created successfully.');
+        return redirect()->route('rubric-evaluations.show',[auth()->user()->id, $projectsHasEvaluator->project->id] )
+            ->with('success', 'Se hizo la evaluación correctamente.');
     }
 
     /**
