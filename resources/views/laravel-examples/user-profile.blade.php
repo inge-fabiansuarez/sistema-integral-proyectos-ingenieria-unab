@@ -11,9 +11,8 @@
                             <div class="row gx-4">
                                 <div class="col-auto">
                                     <div class="avatar avatar-xl position-relative">
-                                        <img src="{{ asset('storage/' . auth()->user()->profile_image) }}" alt=""
+                                        <img src="{{ auth()->user()->profile_image != null ? asset('storage/' . auth()->user()->profile_image) : asset('assets/img/user.png') }}"
                                             class="w-100 border-radius-lg shadow-sm">
-
                                         <input type="file" name="profile_image" accept="image/*"
                                             class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2" />
 

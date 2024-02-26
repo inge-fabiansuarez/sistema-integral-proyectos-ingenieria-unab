@@ -10,9 +10,34 @@ use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
 {
+    public function registerSameUserCreate()
+    {
+        return view('session.register-same-user');
+    }
+
+    public function registerSameUserStore()
+    {
+        $attributes = request()->validate([
+            'name' => ['required', 'max:50'],
+            'email' => ['required', 'email', 'max:50', Rule::unique('users', 'email')],
+            'password' => ['required', 'min:5', 'max:20'],
+            'agreement' => ['accepted']
+        ]);
+        $attributes['password'] = bcrypt($attributes['password']);
+
+
+
+        session()->flash('success', 'Your account has been created.');
+        $user = User::create($attributes);
+        Auth::login($user);
+        $user->last_login_at = now();
+        $user->assignRole('Estudiante');
+        $user->save();
+        return redirect()->route('userprofil.index');
+    }
+
     public function create()
     {
-
         //dd("HIOS");
         return view('session.register');
     }
