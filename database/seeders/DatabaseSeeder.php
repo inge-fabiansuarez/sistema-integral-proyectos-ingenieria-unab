@@ -2,7 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Event;
+use App\Models\Rubric;
+use App\Models\RubricCriterion;
+use App\Models\RubricLevel;
 use Illuminate\Database\Seeder;
+use Whoops\Run;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,7 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             PermissionSeeder::class,
-            ProjectFieldSeeder::class
+            ProjectFieldSeeder::class,
+            RubricSeeder::class,
         ]);
     }
 }

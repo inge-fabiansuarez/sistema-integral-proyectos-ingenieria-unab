@@ -25,6 +25,10 @@ class UserFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'location' => $this->faker->city,
             'about_me' => $this->faker->city,
+            'last_login_at' => $this->faker->dateTimeBetween('-3 months', 'now'),
+            'created_at' => $this->faker->dateTimeBetween('-3 months', 'now'), // Genera una fecha y hora aleatoria dentro del rango especificado
+            'updated_at' => $this->faker->dateTimeBetween('-3 months', 'now'), // Genera una fecha y hora aleatoria dentro del rango especificado
+
         ];
     }
     public function configure()
