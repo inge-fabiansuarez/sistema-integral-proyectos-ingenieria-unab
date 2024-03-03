@@ -2,8 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class UserFactory extends Factory
 {
@@ -17,23 +19,28 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            // 'email_verified_at' => now(),
+            'password' => bcrypt('secret'),
             'remember_token' => Str::random(10),
+            'phone' => $this->faker->phoneNumber,
+            'location' => $this->faker->city,
+            'about_me' => $this->faker->city,
         ];
     }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    public function unverified()
+    public function configure()
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'email_verified_at' => null,
-            ];
+        return $this->afterCreating(function (User $user) {
+            // Asignar un rol al usuario
+
+            // Verificar si el rol ya existe
+            $roleEstudiante = Role::where('name', 'Estudiante')->first();
+
+            // Si el rol no existe, créalo
+            if (!$roleEstudiante) {
+                $roleEstudiante = Role::create(['name' => 'Estudiante']);
+            }
+
+            $user->assignRole($roleEstudiante);
         });
     }
 }

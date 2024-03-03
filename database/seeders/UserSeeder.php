@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,6 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'id' => 1,
             'name' => 'Fabian Enrique Suarez Carvajal',
             'email' => 'fsuarez120@unab.edu.co',
             'password' => Hash::make('secret'),
@@ -27,7 +27,6 @@ class UserSeeder extends Seeder
             'updated_at' => now()
         ]);
         DB::table('users')->insert([
-            'id' => 2,
             'name' => 'Eliana Galvis',
             'email' => 'fonoeliana22@gmail.com',
             'password' => Hash::make('secret'),
@@ -37,5 +36,6 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+        User::factory()->count(10)->create();
     }
 }

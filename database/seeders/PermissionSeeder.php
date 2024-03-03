@@ -26,9 +26,7 @@ class PermissionSeeder extends Seeder
         $roleSuperAdmin = Role::create([
             'name' => 'SuperAdmin'
         ]);
-        $roleEstudiante = Role::create([
-            'name' => 'Estudiante'
-        ]);
+        $roleEstudiante = Role::findByName('Estudiante');
         $roleProfesor = Role::create([
             'name' => 'Profesor'
         ]);
