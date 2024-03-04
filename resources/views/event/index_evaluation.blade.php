@@ -123,151 +123,162 @@
                     </div>
                     <div class="card-body">
 
-                            <table class="table align-items-center mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Proyecto</th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Miembros</th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Evaluadores</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Acciones</th>
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Proyecto</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Miembros</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Evaluadores</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Acciones</th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($event->projects as $project)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="{{ asset('storage/' . $project->cover_image) }}"
-                                                            class="avatar avatar-sm me-3" alt="xd">
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <p class="mb-0 text-sm w-100"
-                                                            style="word-wrap: break-word; overflow: visible;">
-                                                            {{ Illuminate\Support\Str::limit($project->title, 80, '...') }}
-                                                        </p>
-                                                    </div>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($event->projects as $project)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div>
+                                                    <img src="{{ asset($project->cover_image) }}"
+                                                        class="avatar avatar-sm me-3" alt="xd">
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <div class="avatar-group mt-2">
-                                                    @foreach ($project->projectAuthors as $projectAuthor)
-                                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                            aria-label="{{ $projectAuthor->user->name }}"
-                                                            data-bs-original-title="{{ $projectAuthor->user->name }}">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <p class="mb-0 text-sm w-100"
+                                                        style="word-wrap: break-word; overflow: visible;">
+                                                        {{ Illuminate\Support\Str::limit($project->title, 80, '...') }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="avatar-group mt-2">
+                                                @foreach ($project->projectAuthors as $projectAuthor)
+                                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle"
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        aria-label="{{ $projectAuthor->user->name }}"
+                                                        data-bs-original-title="{{ $projectAuthor->user->name }}">
+
+                                                        @if (!$projectAuthor->profile_image)
+                                                            <img src="{{ asset('assets/docs-default/user.png') }}">
+                                                        @else
                                                             <img
                                                                 src="{{ asset('storage/' . $projectAuthor->user->profile_image) }}">
-                                                        </a>
-                                                    @endforeach
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="avatar-group mt-2">
-                                                    @foreach ($project->evaluators as $projectEvaluator)
-                                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                            aria-label="{{ $projectEvaluator->name }}"
-                                                            data-bs-original-title="{{ $projectEvaluator->name }}">
+                                                        @endif
+
+
+                                                    </a>
+                                                @endforeach
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="avatar-group mt-2">
+                                                @foreach ($project->evaluators as $projectEvaluator)
+                                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle"
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        aria-label="{{ $projectEvaluator->name }}"
+                                                        data-bs-original-title="{{ $projectEvaluator->name }}">
+
+                                                        @if (!$projectEvaluator->profile_image)
+                                                            <img src="{{ asset('assets/docs-default/user.png') }}">
+                                                        @else
                                                             <img
                                                                 src="{{ asset('storage/' . $projectEvaluator->profile_image) }}">
-                                                        </a>
-                                                    @endforeach
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <div class="dropdown">
-                                                    <button class="btn bg-gradient-success dropdown-toggle btn-sm"
-                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        Acciones
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <li><a class="dropdown-item"
-                                                                href="{{ route('projects.show', $project) }}">Ver
-                                                                proyecto</a>
-                                                        </li>
-                                                        <!-- Button trigger modal -->
-                                                        <li>
-                                                            <button type="button" class="btn bg-gradient-primary"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#a{{ $project->id }}">
-                                                                Asignar Evaluadores
-                                                            </button>
-                                                        </li>
-                                                        <li>
-                                                            <a class="btn btn-sm btn-info"
-                                                                href="{{ route('rubric-evaluations.evaluationByProject', $project->id) }}"><i
-                                                                    class="fa fa-fw fa-edit"></i>
-                                                                {{ __('Ver evaluaciones') }}</a>
-                                                        </li>
+                                                        @endif
 
-                                                    </ul>
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="a{{ $project->id }}" tabindex="-1"
-                                                        role="dialog" aria-labelledby="exampleModalLabel"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">
-                                                                        Asignar Evaluadores</h5>
-                                                                    <button type="button" class="btn-close text-dark"
-                                                                        data-bs-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
 
-                                                                <form
-                                                                    action="{{ route('events.setUserEvaluation', $project) }}"
-                                                                    method="post">
-                                                                    <input type="hidden" name="eventId"
-                                                                        value="{{ $event->id }}">
-                                                                    <div class="modal-body">
-                                                                        Id Projecto: {{ $project->id }}
-                                                                        <div class="form-group">
-                                                                            <label
-                                                                                for="exampleFormControlSelect2">Seleccione
-                                                                                los evaluadores</label>
-                                                                            <select multiple class="form-control"
-                                                                                id="exampleFormControlSelect2"
-                                                                                name="evaluators[]">
-                                                                                @foreach ($users as $user)
-                                                                                    <option value="{{ $user->id }}"
-                                                                                        @if ($user->id == $project->evaluators->contains('id', $user->id)) @selected(true) @endif>
-                                                                                        {{ $user->name }}
-                                                                                    </option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button"
-                                                                            class="btn bg-gradient-secondary"
-                                                                            data-bs-dismiss="modal">Cerrar</button>
-                                                                        @csrf
-                                                                        <button type="submit"
-                                                                            class="btn bg-gradient-primary">Asignar los
-                                                                            evaluadores</button>
-                                                                    </div>
-                                                                </form>
+                                                    </a>
+                                                @endforeach
+                                            </div>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <div class="dropdown">
+                                                <button class="btn bg-gradient-success dropdown-toggle btn-sm"
+                                                    type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    Acciones
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <li><a class="dropdown-item"
+                                                            href="{{ route('projects.show', $project) }}">Ver
+                                                            proyecto</a>
+                                                    </li>
+                                                    <!-- Button trigger modal -->
+                                                    <li>
+                                                        <button type="button" class="btn bg-gradient-primary"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#a{{ $project->id }}">
+                                                            Asignar Evaluadores
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <a class="btn btn-sm btn-info"
+                                                            href="{{ route('rubric-evaluations.evaluationByProject', $project->id) }}"><i
+                                                                class="fa fa-fw fa-edit"></i>
+                                                            {{ __('Ver evaluaciones') }}</a>
+                                                    </li>
+
+                                                </ul>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="a{{ $project->id }}" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                                    Asignar Evaluadores</h5>
+                                                                <button type="button" class="btn-close text-dark"
+                                                                    data-bs-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
                                                             </div>
+
+                                                            <form
+                                                                action="{{ route('events.setUserEvaluation', $project) }}"
+                                                                method="post">
+                                                                <input type="hidden" name="eventId"
+                                                                    value="{{ $event->id }}">
+                                                                <div class="modal-body">
+                                                                    Id Projecto: {{ $project->id }}
+                                                                    <div class="form-group">
+                                                                        <label for="exampleFormControlSelect2">Seleccione
+                                                                            los evaluadores</label>
+                                                                        <select multiple class="form-control"
+                                                                            id="exampleFormControlSelect2"
+                                                                            name="evaluators[]">
+                                                                            @foreach ($users as $user)
+                                                                                <option value="{{ $user->id }}"
+                                                                                    @if ($user->id == $project->evaluators->contains('id', $user->id)) @selected(true) @endif>
+                                                                                    {{ $user->name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button"
+                                                                        class="btn bg-gradient-secondary"
+                                                                        data-bs-dismiss="modal">Cerrar</button>
+                                                                    @csrf
+                                                                    <button type="submit"
+                                                                        class="btn bg-gradient-primary">Asignar los
+                                                                        evaluadores</button>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
 
                     </div>
                 </div>

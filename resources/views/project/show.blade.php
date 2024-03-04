@@ -99,7 +99,7 @@
                                     @break
 
                                     @case(App\Enums\TypeFieldProjectEnum::FILE->getId())
-                                        <a style="color: red" href="{{ asset('storage/' . $field->pivot->value) }}" target="_blank">
+                                        <a style="color: red" href="{{ asset( $field->pivot->value) }}" target="_blank">
                                             <i class="fas fa-download"></i> Descargar archivo
                                         </a>
                                     @break

@@ -68,7 +68,7 @@ class EventController extends Controller
         // Manejar la carga de la imagen
         if ($request->hasFile('img_cover')) {
             $imagePath = $request->file('img_cover')->store('event_images', 'public');
-            $event->img_cover = $imagePath;
+            $event->img_cover = 'storage/' . $imagePath;
 
             // Guardar el evento
             $event->save();

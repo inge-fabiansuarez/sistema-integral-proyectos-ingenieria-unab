@@ -131,9 +131,9 @@ class DataFakeSeeder extends Seeder
 
         DB::statement("
             INSERT INTO public.events (name, opening_date, closing_date, created_by, description, img_cover, password, state, slug, rubrics_id, created_at, updated_at) VALUES
-            ('TECNOLÓGICAS MÓVILES', '2024-03-03 19:18:00', '2024-03-08 19:18:00', 1, 'Las tecnologías móviles son avances tecnológicos diseñados para dispositivos que las personas pueden llevar consigo, como teléfonos inteligentes y tabletas. La tecnología móvil es aquella que va a donde está el usuario. Se compone de dispositivos portátiles de comunicación bidireccional, dispositivos informáticos y la tecnología de red que los conecta. Algunos tipos de dispositivos móviles son: Teléfonos inteligentes y Tabletas Relojes inteligentes Agendas digitales Calculadoras Videoconsolas portátiles Reproductores digitales Cámaras fotográficas digitales Cámaras de video digitales', 'event_images/wmmrDMW2uHJ0EgDPEa1TTaR15XzVABWmKw10FRDP.jpg', '1234', 1, 'tecnologicas-moviles', NULL, '2024-03-04 00:19:22', '2024-03-04 00:19:22'),
-            ('DESARROLLO DE VIDEOJUEGOS', '2024-03-03 19:20:00', '2024-03-07 19:20:00', 1, 'ESTE ES UN EJEMPLO DE PROYECTO QUE SE DEBERIA HACER PARA ......', 'event_images/yD4vpoaKgb8vrmEbZnCh3Hh8Z7NutdEXgXMySg1h.jpg', '1234', 1, 'desarrollo-de-videojuegos', NULL, '2024-03-04 00:20:55', '2024-03-04 00:20:55'),
-            ('SEMANA DE LA INGENIERÍA - INNGENIATEC', '2024-03-03 19:15:00', '2024-03-04 19:15:00', 1, 'La Facultad de Ingeniería de la UNAB tiene el gusto de invitarlos a la segunda edición de nuestra Semana de Ingeniería: Ingeniería en la era de la inteligencia artificial: ética, retos y tendencias, a desarrollarse los días 4, 5 y 6 de octubre de 2023. En el evento se reunirán estudiantes, docentes y profesionales para abordar desde distintos campos disciplinares el aporte de la ingeniería a la sociedad. En este espacio, se contará con la presencia de ponentes magistrales, líderes en las temáticas principales del evento. De igual forma, se llevarán a cabo actividades institucionales como lo son el XVII Encuentro de Semilleros de Investigación 2023 UNAB y el INGENIATE-C 2023.', 'event_images/zkZ5TqWf8jq4MoPiacnHHi8Biv4tCQQG1iqdbQja.png', '1234', 1, 'semana-de-la-ingenieria-inngeniatec', NULL, '2024-03-04 00:17:08', '2024-03-04 00:17:08');
+            ('TECNOLÓGICAS MÓVILES', '2024-03-03 19:18:00', '2024-03-08 19:18:00', 1, 'Las tecnologías móviles son avances tecnológicos diseñados para dispositivos que las personas pueden llevar consigo, como teléfonos inteligentes y tabletas. La tecnología móvil es aquella que va a donde está el usuario. Se compone de dispositivos portátiles de comunicación bidireccional, dispositivos informáticos y la tecnología de red que los conecta. Algunos tipos de dispositivos móviles son: Teléfonos inteligentes y Tabletas Relojes inteligentes Agendas digitales Calculadoras Videoconsolas portátiles Reproductores digitales Cámaras fotográficas digitales Cámaras de video digitales', 'assets/docs-default/moviles.jpg', '1234', 1, 'tecnologicas-moviles', NULL, '2024-03-04 00:19:22', '2024-03-04 00:19:22'),
+            ('DESARROLLO DE VIDEOJUEGOS', '2024-03-03 19:20:00', '2024-03-07 19:20:00', 1, 'ESTE ES UN EJEMPLO DE PROYECTO QUE SE DEBERIA HACER PARA ......', 'assets/docs-default/videojuegos.jpg', '1234', 1, 'desarrollo-de-videojuegos', NULL, '2024-03-04 00:20:55', '2024-03-04 00:20:55'),
+            ('SEMANA DE LA INGENIERÍA - INNGENIATEC', '2024-03-03 19:15:00', '2024-03-04 19:15:00', 1, 'La Facultad de Ingeniería de la UNAB tiene el gusto de invitarlos a la segunda edición de nuestra Semana de Ingeniería: Ingeniería en la era de la inteligencia artificial: ética, retos y tendencias, a desarrollarse los días 4, 5 y 6 de octubre de 2023. En el evento se reunirán estudiantes, docentes y profesionales para abordar desde distintos campos disciplinares el aporte de la ingeniería a la sociedad. En este espacio, se contará con la presencia de ponentes magistrales, líderes en las temáticas principales del evento. De igual forma, se llevarán a cabo actividades institucionales como lo son el XVII Encuentro de Semilleros de Investigación 2023 UNAB y el INGENIATE-C 2023.', 'assets/docs-default/ingeniatec.jpg', '1234', 1, 'semana-de-la-ingenieria-inngeniatec', NULL, '2024-03-04 00:17:08', '2024-03-04 00:17:08');
         ");
 
         DB::table('events_has_project_field')->insert([
@@ -204,6 +204,201 @@ INSERT INTO public.events (name, opening_date, closing_date, created_by, descrip
                 ['events_id' => $relationship[0], 'project_field_id' => $relationship[1]],
                 ['created_at' => null, 'updated_at' => null]
             );
+        }
+
+
+        // Insertar el proyecto
+        $projectId = DB::table('projects')->insertGetId([
+            'title' => 'Bus Unab App',
+            'description' => 'Proyecto en aras de contribuir en el bus unab',
+            'cover_image' => 'assets/docs-default/proyecto.jpg',
+            'created_at' => '2024-03-04 00:51:44',
+            'updated_at' => '2024-03-04 00:51:44',
+        ]);
+
+        // Insertar eventos_has_projects
+        DB::table('events_has_projects')->insert([
+            'events_id' => 1,
+            'projects_id' => $projectId,
+        ]);
+
+        // Insertar project_authors
+        DB::table('project_authors')->insert([
+            ['projects_id' => $projectId, 'users_id' => 8, 'created_at' => '2024-03-04 00:51:44', 'updated_at' => '2024-03-04 00:51:44'],
+            ['projects_id' => $projectId, 'users_id' => 18, 'created_at' => '2024-03-04 00:51:44', 'updated_at' => '2024-03-04 00:51:44'],
+            ['projects_id' => $projectId, 'users_id' => 1, 'created_at' => '2024-03-04 00:51:44', 'updated_at' => '2024-03-04 00:51:44'],
+        ]);
+
+        // Generar una fecha aleatoria en los últimos 365 días
+        $createdAt = now()->subDays(rand(1, 30));
+        $softwareEngineeringKeywords = [
+            'Desarrollo', 'Software', 'Código', 'Programación', 'Algoritmo', 'Estructura', 'Datos', 'Compilador', 'Interprete', 'Lenguaje',
+            'Depuración', 'Depurar', 'Optimización', 'Repositorio', 'Control', 'Versiones', 'Git', 'Subversion', 'Mercurial', 'Bitbucket',
+            'GitHub', 'GitLab', 'Despliegue', 'Continuo', 'Integración', 'CI/CD', 'Automatización', 'Pruebas', 'Unitarias', 'Funcionales',
+            'Regresión', 'Integración', 'Sistema', 'Gestión', 'Proyectos', 'Agile', 'Scrum', 'Kanban', 'Lean', 'DevOps', 'Infraestructura',
+            'Nube', 'Servidor', 'Cliente', 'Arquitectura', 'Microservicios', 'Monolito', 'API', 'REST', 'SOAP', 'GraphQL', 'Framework',
+            'Backend', 'Frontend', 'Fullstack', 'MVC', 'MVVM', 'Componentes', 'Librería', 'Dependencias', 'Package', 'Bundle', 'Middleware',
+            'Servicio', 'API Gateway', 'Orquestación', 'Docker', 'Kubernetes', 'Contenedor', 'Escalabilidad', 'Rendimiento',
+            'Seguridad', 'Criptografía', 'Autenticación', 'Autorización', 'OWASP', 'Vulnerabilidad', 'Ataque', 'Inyección', 'SQL',
+            'Cross-Site Scripting', 'Cross-Site Request Forgery', 'XSS', 'CSRF', 'Red', 'TCP/IP', 'HTTP', 'HTTPS', 'SSH', 'Firewall', 'VPN',
+            'Proxy', 'IDS', 'IPS', 'WAF', 'Monitorización', 'Logs', 'Métricas', 'Análisis', 'Disponibilidad', 'Resiliencia', 'Internet de las cosas', 'Iot', 'Ingenieria de software'
+        ];
+
+        $softwareEngineeringKeywords = array_unique($softwareEngineeringKeywords);
+
+        // Insertar keywords en la base de datos
+        foreach ($softwareEngineeringKeywords as $keywordName) {
+            DB::table('keywords')->insert([
+                'name' => $keywordName,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+
+
+
+        // Insertar projects_has_field
+        DB::table('projects_has_field')->insert([
+            ['projects_id' => $projectId, 'project_field_id' => 1, 'value' => 'Desarrolla runa aplicacion de ....'],
+            ['projects_id' => $projectId, 'project_field_id' => 2, 'value' => 'objetivos específicos 1'],
+            ['projects_id' => $projectId, 'project_field_id' => 3, 'value' => 'jjlkfajsdl lasjlfj sldjf lkasjd lfñ jasdñlkf jañsld fjñalsd jfñlk ajsdfñ jalksd jflañksdj fñl ajsdlfk asd'],
+            ['projects_id' => $projectId, 'project_field_id' => 4, 'value' => 'ja sjdfljasdlk fjkldsj fkl adsjfk ljsdlkjfñlaksjdfñaioe fñlknlknvñ akjsdf'],
+            ['projects_id' => $projectId, 'project_field_id' => 5, 'value' => 'kjalsdifosdflkasj dfa skdfjñlsjd fkajsñ lkjflsdjkflsjdfienfnzdjknfk'],
+            ['projects_id' => $projectId, 'project_field_id' => 6, 'value' => 'jfalksdj flksnkf n'],
+            ['projects_id' => $projectId, 'project_field_id' => 7, 'value' => 'assets/docs-default/Documento de referencia.pdf'],
+            ['projects_id' => $projectId, 'project_field_id' => 8, 'value' => 'assets/docs-default/Documento de referencia.pdf'],
+            ['projects_id' => $projectId, 'project_field_id' => 9, 'value' => 'assets/docs-default/Documento de referencia.pdf'],
+            ['projects_id' => $projectId, 'project_field_id' => 10, 'value' => 'FASFASDF ASDFASD AFSD'],
+            ['projects_id' => $projectId, 'project_field_id' => 11, 'value' => 'assets/docs-default/Documento de referencia.pdf'],
+            ['projects_id' => $projectId, 'project_field_id' => 12, 'value' => 'https://github.com/inge-fabiansuarez/sistema-integral-proyectos-ingenieria-unab'],
+            ['projects_id' => $projectId, 'project_field_id' => 13, 'value' => 'assets/docs-default/Documento de referencia.pdf'],
+        ]);
+
+
+
+
+        $projectNames = [
+            'MessagingApp', 'PhotoEditor', 'NavigationApp', 'FitnessApp', 'CalendarApp',
+            'ShoppingListApp', 'RecipeApp', 'LanguageApp', 'BudgetApp', 'HealthTrackerApp',
+            'NewsApp', 'WeatherWidget', 'TaskTrackerApp', 'MusicStreamingApp', 'TravelGuideApp',
+            'FoodDeliveryApp', 'ExpenseManager', 'NoteTakingApp', 'SocialNetworkingApp', 'GamingApp',
+            'MessagingApp2', 'PhotoEditor2', 'NavigationApp2', 'FitnessApp2', 'CalendarApp2',
+            'ShoppingListApp2', 'RecipeApp2', 'LanguageApp2', 'BudgetApp2', 'HealthTrackerApp2',
+            'NewsApp2', 'WeatherWidget2', 'TaskTrackerApp2', 'MusicStreamingApp2', 'TravelGuideApp2',
+            'FoodDeliveryApp2', 'ExpenseManager2', 'NoteTakingApp2', 'SocialNetworkingApp2', 'GamingApp2',
+            'MessagingApp3', 'PhotoEditor3', 'NavigationApp3', 'FitnessApp3', 'CalendarApp3',
+            'ShoppingListApp3', 'RecipeApp3', 'LanguageApp3', 'BudgetApp3', 'HealthTrackerApp3',
+            'NewsApp3', 'WeatherWidget3', 'TaskTrackerApp3', 'MusicStreamingApp3', 'TravelGuideApp3',
+            'FoodDeliveryApp3', 'ExpenseManager3', 'NoteTakingApp3', 'SocialNetworkingApp3', 'GamingApp3',
+
+            'MessagingApp', 'PhotoEditor', 'NavigationApp', 'FitnessApp', 'CalendarApp',
+            'ShoppingListApp', 'RecipeApp', 'LanguageApp', 'BudgetApp', 'HealthTrackerApp',
+            'NewsApp', 'WeatherWidget', 'TaskTrackerApp', 'MusicStreamingApp', 'TravelGuideApp',
+            'FoodDeliveryApp', 'ExpenseManager', 'NoteTakingApp', 'SocialNetworkingApp', 'GamingApp', 'SocialMedia', 'Ecommerce', 'FitnessTracker', 'WeatherApp', 'TaskManager', 'MusicPlayer', 'TravelPlanner', 'FoodDelivery', 'LanguageLearning', 'ExpenseTracker'
+        ];
+
+        // Obtener todos los IDs de las palabras clave
+        $keywordIds = DB::table('keywords')->pluck('id')->toArray();
+
+        foreach ($projectNames as $name) {
+            // Generar una fecha aleatoria en los últimos 365 días
+            $createdAt = now()->subDays(rand(1, 30));
+
+
+            // Insertar el proyecto
+            $projectId = DB::table('projects')->insertGetId([
+                'title' => $name,
+                'description' => 'Description for ' . $name,
+                'cover_image' => 'assets/docs-default/proyecto.jpg',
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt,
+            ]);
+
+            // Insertar eventos_has_projects
+            DB::table('events_has_projects')->insert([
+                'events_id' => 1,
+                'projects_id' => $projectId,
+            ]);
+
+            // Insertar autores del proyecto (ejemplo)
+            DB::table('project_authors')->insert([
+                ['projects_id' => $projectId, 'users_id' => 1, 'created_at' => $createdAt, 'updated_at' => $createdAt],
+                ['projects_id' => $projectId, 'users_id' => 2, 'created_at' => $createdAt, 'updated_at' => $createdAt],
+            ]);
+
+
+
+
+            // Obtener una cantidad aleatoria de IDs de palabras clave (máximo 5)
+            $randomKeywordIds = collect($keywordIds)->shuffle()->take(5)->toArray();
+
+            // Insertar relaciones en la tabla pivot keyword_project
+            foreach ($randomKeywordIds as $keywordId) {
+                DB::table('keyword_project')->insert([
+                    'keyword_id' => $keywordId,
+                    'project_id' => $projectId,
+                ]);
+            }
+        }
+
+
+
+
+
+
+
+        $projectNames = [
+            'FPSGame', 'AdventureQuest', 'RPGFantasy', 'PuzzleMania', 'ArcadeMania',
+            'RacingRush', 'StrategyKingdom', 'SimulationCity', 'SportsMania', 'MMORPGWorld',
+            'FightingFrenzy', 'PlatformerParadise', 'SurvivalSaga', 'HorrorHavoc', 'ActionArena',
+            'FPSGame2', 'AdventureQuest2', 'RPGFantasy2', 'PuzzleMania2', 'ArcadeMania2',
+            'RacingRush2', 'StrategyKingdom2', 'SimulationCity2', 'SportsMania2', 'MMORPGWorld2',
+            'FightingFrenzy2', 'PlatformerParadise2', 'SurvivalSaga2', 'HorrorHavoc2', 'ActionArena2',
+            'FPSGame3', 'AdventureQuest3', 'RPGFantasy3', 'PuzzleMania3', 'ArcadeMania3',
+            'RacingRush3', 'StrategyKingdom3', 'SimulationCity3', 'SportsMania3', 'MMORPGWorld3',
+            'FightingFrenzy3', 'PlatformerParadise3', 'SurvivalSaga3', 'HorrorHavoc3', 'ActionArena3',
+            'SocialMedia', 'Ecommerce', 'FitnessTracker', 'WeatherApp', 'TaskManager', 'MusicPlayer', 'TravelPlanner', 'FoodDelivery', 'LanguageLearning', 'ExpenseTracker', 'FirstPersonShooter', 'RolePlayingGame', 'Platformer', 'SurvivalHorror', 'RealTimeStrategy',
+            'MassivelyMultiplayerOnline', 'OpenWorldAdventure', 'Simulator', 'PuzzleGame', 'RacingGame',
+            'SportsGame', 'EducationalGame', 'TextAdventure', 'VirtualRealityExperience', 'AugmentedRealityGame',
+            'MobileGame', 'CasualGame', 'ActionAdventure', 'StrategyGame', 'IndieGame',
+        ];
+
+
+        foreach ($projectNames as $name) {
+            // Generar una fecha aleatoria en los últimos 30 días
+            $createdAt = now()->subDays(rand(1, 30));
+            // Insertar el proyecto
+            $projectId = DB::table('projects')->insertGetId([
+                'title' => $name,
+                'description' => 'Description for ' . $name,
+                'cover_image' => 'assets/docs-default/proyecto.jpg',
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt,
+            ]);
+
+            // Insertar eventos_has_projects para el evento con ID 2
+            DB::table('events_has_projects')->insert([
+                'events_id' => 2,
+                'projects_id' => $projectId,
+            ]);
+
+            // Insertar autores del proyecto (ejemplo)
+            DB::table('project_authors')->insert([
+                ['projects_id' => $projectId, 'users_id' => 1, 'created_at' => $createdAt, 'updated_at' => $createdAt],
+                ['projects_id' => $projectId, 'users_id' => 2, 'created_at' => $createdAt, 'updated_at' => $createdAt],
+            ]);
+
+            // Obtener una cantidad aleatoria de IDs de palabras clave (máximo 5)
+            $randomKeywordIds = collect($keywordIds)->shuffle()->take(rand(1, 20))->toArray();
+
+            // Insertar relaciones en la tabla pivot keyword_project
+            foreach ($randomKeywordIds as $keywordId) {
+                DB::table('keyword_project')->insert([
+                    'keyword_id' => $keywordId,
+                    'project_id' => $projectId,
+                ]);
+            }
         }
     }
 }

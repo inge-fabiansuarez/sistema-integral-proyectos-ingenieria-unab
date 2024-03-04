@@ -47,7 +47,7 @@
                                         <div
                                             class="position-relative d-flex align-items-center justify-content-center h-100">
                                             <img class="w-100 position-relative z-index-2 pt-4"
-                                                src="{{ asset('storage/' . $evaluation->project->cover_image) }}"
+                                                src="{{ asset( $evaluation->project->cover_image) }}"
                                                 alt="rocket">
                                         </div>
                                     </div>

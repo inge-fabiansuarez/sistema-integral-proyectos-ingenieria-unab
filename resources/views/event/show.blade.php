@@ -14,7 +14,7 @@
         </div>
         <section class="min-vh-100 mb-8">
             <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg"
-                style="background-image: url('{{ asset('storage/' . $event->img_cover) }}');">
+                style="background-image: url('{{ asset( $event->img_cover) }}');">
                 <span class="mask bg-gradient-dark opacity-2"></span>
                 <div class="container">
                     <div class="row justify-content-center">
@@ -77,7 +77,7 @@
                                                 <div class="card card-blog card-plain">
                                                     <div class="position-relative">
                                                         <a class="d-block shadow-xl border-radius-xl">
-                                                            <img src="{{ asset('storage/' . $project->cover_image) }}"
+                                                            <img src="{{ asset( $project->cover_image) }}"
                                                                 alt="No encontro recurso"
                                                                 class="img-fluid shadow border-radius-xl">
                                                         </a>

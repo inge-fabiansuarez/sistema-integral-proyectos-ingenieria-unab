@@ -32,7 +32,7 @@ class HomeController extends Controller
             ->whereBetween('projects.created_at', [Carbon::now()->subMonths(6), Carbon::now()])
             ->groupBy('keywords.name')
             ->orderByDesc('frequency')
-            ->take(10)
+            ->take(8)
             ->get();
 
         $labels = $keywordFrequency->pluck('name');

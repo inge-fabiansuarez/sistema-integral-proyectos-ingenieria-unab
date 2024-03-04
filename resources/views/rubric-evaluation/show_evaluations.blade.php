@@ -52,8 +52,14 @@
                                                     <td>
                                                         <div class="d-flex px-2 py-1">
                                                             <div>
-                                                                <img src="{{ asset('storage/' . $evaluatorAssignment->evaluator->profile_image) }}"
-                                                                    class="avatar avatar-sm me-3">
+                                                                @if (!$evaluatorAssignment->evaluator->profile_image)
+                                                                    <img src="{{ asset('assets/docs-default/user.png') }}"
+                                                                        class="avatar avatar-sm me-3">
+                                                                @else
+                                                                    <img src="{{ asset('storage/' . $evaluatorAssignment->evaluator->profile_image) }}"
+                                                                        class="avatar avatar-sm me-3">
+                                                                @endif
+
                                                             </div>
                                                             <div class="d-flex flex-column justify-content-center">
                                                                 <h6 class="mb-0 text-xs">
@@ -89,7 +95,9 @@
                                                             @break
 
                                                             @case(App\Enums\StateEvaluationUserEnum::EVALUATED->getId())
-                                                                <p class="text text-secondary mb-0">{{$evaluatorAssignment->getTotalEvaluationPoints($evaluatorAssignment->evaluator)}}</p>
+                                                                <p class="text text-secondary mb-0">
+                                                                    {{ $evaluatorAssignment->getTotalEvaluationPoints($evaluatorAssignment->evaluator) }}
+                                                                </p>
                                                             @break
 
                                                             @default

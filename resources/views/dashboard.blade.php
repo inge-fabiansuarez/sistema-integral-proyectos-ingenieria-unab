@@ -177,7 +177,7 @@
         </div>
     </div>
     <div class="row my-4">
-        <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+        <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
             <div class="card">
                 <div class="card-header pb-0">
                     <div class="row">
@@ -212,15 +212,13 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Companies</th>
+                                        Proyecto</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Members</th>
+                                        Autores</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Budget</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Completion</th>
+                                        descripción</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -229,8 +227,13 @@
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div>
-                                                    <img src="{{ asset('storage/' . $project->cover_image) }}"
-                                                        class="avatar avatar-sm me-3" alt="xd">
+                                                    @if (!$project->cover_image)
+                                                        <img src="{{ asset('assets/docs-default/proyecto.jpg') }}"
+                                                            class="avatar avatar-sm me-3" alt="xd">
+                                                    @else
+                                                        <img src="{{ asset($project->cover_image) }}"
+                                                            class="avatar avatar-sm me-3" alt="xd">
+                                                    @endif
                                                 </div>
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">
@@ -244,9 +247,14 @@
                                                 @foreach ($project->projectAuthors as $author)
                                                     <a href="javascript:;" class="avatar avatar-xs rounded-circle"
                                                         data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                        aria-label="{{ $author->name }}"
-                                                        data-bs-original-title="{{ $author->name }}">
-                                                        <img src="{{ asset('storage/' . $author->profile_image) }}">
+                                                        aria-label="{{ $author->user->name }}"
+                                                        data-bs-original-title="{{ $author->user->name }}">
+                                                        @if (!$author->profile_image)
+                                                            <img src="{{ asset('assets/docs-default/user.png') }}">
+                                                        @else
+                                                            <img src="{{ asset('storage/' . $author->profile_image) }}">
+                                                        @endif
+
                                                     </a>
                                                 @endforeach
                                             </div>
@@ -256,7 +264,7 @@
                                                 {{ Illuminate\Support\Str::limit($project->description, 200, '...') }}
                                             </span>
                                         </td>
-                                        <td class="align-middle">
+                                       {{--  <td class="align-middle">
                                             <div class="progress-wrapper w-75 mx-auto">
                                                 <div class="progress-info">
                                                     <div class="progress-percentage">
@@ -268,7 +276,7 @@
                                                         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>

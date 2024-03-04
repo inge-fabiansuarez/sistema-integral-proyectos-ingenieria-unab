@@ -132,7 +132,7 @@ class ProjectController extends Controller
             $coverImage->storeAs('projects/cover_images', $coverImageName, 'public');
 
             // Guarda la ruta de la imagen de portada en la base de datos
-            $project->cover_image = 'projects/cover_images/' . $coverImageName;
+            $project->cover_image = 'storage/projects/cover_images/' . $coverImageName;
         }
 
 
@@ -166,7 +166,7 @@ class ProjectController extends Controller
                         $file->storeAs('projects/archivos_proyectos', $fileName, 'public');
 
                         // Guarda la ruta del archivo en la base de datos
-                        $value = 'projects/archivos_proyectos/' . $fileName;
+                        $value = 'storage/projects/archivos_proyectos/' . $fileName;
                     } else {
                         $value = null;
                     }
