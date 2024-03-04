@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ProjectAuthor extends Model
 {
     use HasFactory;
+
+    public $incrementing = true;
+
     protected $fillable = [
         'projects_id', 'users_id',
     ];

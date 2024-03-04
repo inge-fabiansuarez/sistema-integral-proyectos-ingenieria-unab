@@ -52,9 +52,9 @@ return new class extends Migration
 
         // Project Authors Table
         Schema::create('project_authors', function (Blueprint $table) {
+            $table->id();
             $table->bigInteger('projects_id')->unsigned();
             $table->bigInteger('users_id')->unsigned();
-            $table->primary(['projects_id', 'users_id']);
             $table->timestamps();
 
             $table->foreign('projects_id')->references('id')->on('projects')->onDelete('cascade');

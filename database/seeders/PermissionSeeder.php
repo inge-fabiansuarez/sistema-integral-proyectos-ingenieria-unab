@@ -21,12 +21,19 @@ class PermissionSeeder extends Seeder
     {
 
         $userSuperAdmin = User::find(1);
-        $userProfesor = User::find(2);
+        //$userProfesor = User::find(2);
 
         $roleSuperAdmin = Role::create([
             'name' => 'SuperAdmin'
         ]);
-        $roleEstudiante = Role::findByName('Estudiante');
+        // Verificar si el rol ya existe
+        $roleEstudiante = Role::where('name', 'Estudiante')->first();
+
+        // Si el rol no existe, créalo
+        if (!$roleEstudiante) {
+            $roleEstudiante = Role::create(['name' => 'Estudiante']);
+        }
+
         $roleProfesor = Role::create([
             'name' => 'Profesor'
         ]);
@@ -78,6 +85,6 @@ class PermissionSeeder extends Seeder
             $permissionProjects,
         ]);
         $userSuperAdmin->assignRole($roleSuperAdmin);
-        $userProfesor->assignRole($roleProfesor);
+        //$userProfesor->assignRole($roleProfesor);
     }
 }
