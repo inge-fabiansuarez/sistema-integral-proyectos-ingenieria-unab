@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ExcelReportController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectFieldController;
@@ -136,6 +137,10 @@ Route::group(['middleware' => 'auth'], function () {
     //niveles de los criterios
     Route::resource('niveles-del-criterio', RubricLevelController::class)->names('rubric-levels');
     Route::get('niveles-del-criterio/create/{criterion?}', [RubricLevelController::class, 'create'])->name('rubric-levels.create');
+
+
+    //reportes
+    Route::get('event/evaluation/{event}', [ExcelReportController::class, 'evaluationByEvent'])->name('excelreport.eventByEvent');
 });
 
 

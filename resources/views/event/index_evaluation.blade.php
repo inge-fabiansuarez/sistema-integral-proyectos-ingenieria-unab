@@ -55,10 +55,12 @@
                                 data-bs-toggle="modal">Asignar Rúbrica</button>
                         </form>
 
-
+                        <button type="button" class="btn btn-block bg-gradient-warning mb-3"
+                            data-bs-toggle="modal">Descargar Reporte</button>
                         <div class="col-md-4">
-                            <button type="button" class="btn btn-block bg-gradient-danger mb-3" data-bs-toggle="modal"
-                                data-bs-target="#modal-notification">Cerrar Evento</button>
+                            <a href= "{{ route('excelreport.eventByEvent', $event) }}"
+                                class="btn btn-block bg-gradient-danger mb-3" data-bs-toggle="modal"
+                                data-bs-target="#modal-notification">Cerrar Evento</a>
                             <div class="modal fade" id="modal-notification" tabindex="-1" role="dialog"
                                 aria-labelledby="modal-notification" aria-hidden="true">
                                 <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
