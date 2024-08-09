@@ -1,6 +1,6 @@
 # [Elaborado por Fabián Suárez](https://www.linkedin.com/in/inge-fabiansuarez/)
 
-## Sistema Integral de Evaluación y Seguimiento de Proyectos de Ingeniería en la UNAB
+## Sistema Integral de Evaluación de Proyectos de Ingeniería en la UNAB
 
 El presente estudio se enfoca en investigar la efectividad de la implementación de un software integral de evaluación y seguimiento de proyectos de ingeniería en el ámbito académico fortaleciendo la gestión curricular en la UNAB.
 

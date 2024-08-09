@@ -36,13 +36,13 @@ class DataFakeSeeder extends Seeder
 
         // Insertar datos en la tabla rubrics
         DB::statement("
-          INSERT INTO public.rubrics (name, description, total_rating, created_at, updated_at) VALUES
+          INSERT INTO rubrics (name, description, total_rating, created_at, updated_at) VALUES
           ('Rubrica de evaluación', 'Rubrica para evaluar', 5.0, '2024-03-03 04:55:30', '2024-03-03 04:55:30');
       ");
 
         // Insertar datos en la tabla rubric_criteria
         DB::statement("
-          INSERT INTO public.rubric_criteria (name, rubrics_id, created_at, updated_at) VALUES
+          INSERT INTO rubric_criteria (name, rubrics_id, created_at, updated_at) VALUES
           ('Originalidad de la idea central.', 1, '2024-03-03 04:55:50', '2024-03-03 04:55:50'),
           ('Elaboración de las ideas secundarias.', 1, '2024-03-03 04:57:18', '2024-03-03 04:57:18'),
           ('Redacción, cohesión y coherencia.', 1, '2024-03-03 04:58:31', '2024-03-03 04:58:31');
@@ -51,7 +51,7 @@ class DataFakeSeeder extends Seeder
 
         // Insertar datos en la tabla rubric_levels
         DB::statement("
-          INSERT INTO public.rubric_levels (name, points, rubric_criteria_id, created_at, updated_at) VALUES
+          INSERT INTO rubric_levels (name, points, rubric_criteria_id, created_at, updated_at) VALUES
           ('Insuficiente. No entrega el trabajo.', 0.0, 1, '2024-03-03 04:56:01', '2024-03-03 04:56:01'),
           ('Bien. La idea central es interesante, pero no es novedosa o podría mejorar', 4.0, 1, '2024-03-03 04:56:32', '2024-03-03 04:56:32'),
           ('Muy bien. La idea central es interesante y novedosa.', 6.0, 1, '2024-03-03 04:56:46', '2024-03-03 04:56:46'),
@@ -65,7 +65,7 @@ class DataFakeSeeder extends Seeder
 
         // Insertar datos en la tabla rubrics
         DB::statement("
-            INSERT INTO public.rubrics (name, description, total_rating, created_at, updated_at) VALUES
+            INSERT INTO rubrics (name, description, total_rating, created_at, updated_at) VALUES
             ('Otra rubrica', 'Otra descripción', 6.0, '2024-03-04 05:00:00', '2024-03-04 05:00:00'),
             ('Rubrica de ejemplo', 'Descripción de la rubrica de ejemplo', 7.0, '2024-03-05 06:00:00', '2024-03-05 06:00:00'),
             ('Rubrica 4', 'Descripción de la rubrica 4', 8.0, '2024-03-06 07:00:00', '2024-03-06 07:00:00'),
@@ -130,7 +130,7 @@ class DataFakeSeeder extends Seeder
 
 
         DB::statement("
-            INSERT INTO public.events (name, opening_date, closing_date, created_by, description, img_cover, password, state, slug, rubrics_id, created_at, updated_at) VALUES
+            INSERT INTO events (name, opening_date, closing_date, created_by, description, img_cover, password, state, slug, rubrics_id, created_at, updated_at) VALUES
             ('TECNOLÓGICAS MÓVILES', '2024-03-03 19:18:00', '2024-03-08 19:18:00', 1, 'Las tecnologías móviles son avances tecnológicos diseñados para dispositivos que las personas pueden llevar consigo, como teléfonos inteligentes y tabletas. La tecnología móvil es aquella que va a donde está el usuario. Se compone de dispositivos portátiles de comunicación bidireccional, dispositivos informáticos y la tecnología de red que los conecta. Algunos tipos de dispositivos móviles son: Teléfonos inteligentes y Tabletas Relojes inteligentes Agendas digitales Calculadoras Videoconsolas portátiles Reproductores digitales Cámaras fotográficas digitales Cámaras de video digitales', 'assets/docs-default/moviles.jpg', '1234', 1, 'tecnologicas-moviles', NULL, '2024-03-04 00:19:22', '2024-03-04 00:19:22'),
             ('DESARROLLO DE VIDEOJUEGOS', '2024-03-03 19:20:00', '2024-03-07 19:20:00', 1, 'ESTE ES UN EJEMPLO DE PROYECTO QUE SE DEBERIA HACER PARA ......', 'assets/docs-default/videojuegos.jpg', '1234', 1, 'desarrollo-de-videojuegos', NULL, '2024-03-04 00:20:55', '2024-03-04 00:20:55'),
             ('SEMANA DE LA INGENIERÍA - INNGENIATEC', '2024-03-03 19:15:00', '2024-03-04 19:15:00', 1, 'La Facultad de Ingeniería de la UNAB tiene el gusto de invitarlos a la segunda edición de nuestra Semana de Ingeniería: Ingeniería en la era de la inteligencia artificial: ética, retos y tendencias, a desarrollarse los días 4, 5 y 6 de octubre de 2023. En el evento se reunirán estudiantes, docentes y profesionales para abordar desde distintos campos disciplinares el aporte de la ingeniería a la sociedad. En este espacio, se contará con la presencia de ponentes magistrales, líderes en las temáticas principales del evento. De igual forma, se llevarán a cabo actividades institucionales como lo son el XVII Encuentro de Semilleros de Investigación 2023 UNAB y el INGENIATE-C 2023.', 'assets/docs-default/ingeniatec.jpg', '1234', 1, 'semana-de-la-ingenieria-inngeniatec', NULL, '2024-03-04 00:17:08', '2024-03-04 00:17:08');
@@ -178,7 +178,7 @@ class DataFakeSeeder extends Seeder
 
         // Insertar eventos
         DB::statement("
-INSERT INTO public.events (name, opening_date, closing_date, created_by, description, img_cover, password, state, slug, rubrics_id, created_at, updated_at) VALUES
+INSERT INTO events (name, opening_date, closing_date, created_by, description, img_cover, password, state, slug, rubrics_id, created_at, updated_at) VALUES
 ('Evento 1', '2024-03-03 19:18:00', '2024-03-08 19:18:00', 1, 'Descripción del evento 1', 'event_images/imagen1.jpg', '1234', 1, 'evento-1', NULL, '2024-03-04 00:19:22', '2024-03-04 00:19:22'),
 ('Evento 2', '2024-03-03 19:20:00', '2024-03-07 19:20:00', 1, 'Descripción del evento 2', 'event_images/imagen2.jpg', '1234', 1, 'evento-2', NULL, '2024-03-04 00:20:55', '2024-03-04 00:20:55'),
 ('Evento 3', '2024-03-03 19:15:00', '2024-03-04 19:15:00', 1, 'Descripción del evento 3', 'event_images/imagen3.jpg', '1234', 1, 'evento-3', NULL, '2024-03-04 00:17:08', '2024-03-04 00:17:08'),
